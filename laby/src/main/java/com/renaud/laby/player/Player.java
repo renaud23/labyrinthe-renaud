@@ -67,25 +67,22 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 	
 	@Override
 	public void up() {
-		// TODO Auto-generated method stub
+		this.move(DEVANT_DIR);
 	}
 
 	@Override
 	public void left() {
-		// TODO Auto-generated method stub
-		
+		this.move(GAUCHE_DIR);
 	}
 
 	@Override
 	public void down() {
-		// TODO Auto-generated method stub
-		
+		this.move(DERRIERE_DIR);
 	}
 
 	@Override
 	public void right() {
-		// TODO Auto-generated method stub
-		
+		this.move(DROITE_DIR);
 	}
 
 	@Override
@@ -140,6 +137,29 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 		
 		this.rw.render(op, kind);
 		
+		if(dirVue == NORD) op.drawChar("NORD", 10, 150);
+		if(dirVue == SUD) op.drawChar("SUD", 10, 150);
+		if(dirVue == EST) op.drawChar("EST", 10, 150);
+		if(dirVue == OUEST) op.drawChar("OUEST", 10, 150);
+	}
+	
+	private void move(int code){
+		int[] tab = laby.getTable();
+		int l = laby.getLargeurTable();
+		switch(code){
+			case GAUCHE_DIR:
+				break;
+			case DROITE_DIR:
+				break;
+			case DEVANT_DIR:
+				if(dirVue == NORD && tab[pos-l] == 0) pos -= l;
+				if(dirVue == SUD && tab[pos+l] == 0) pos += l;
+				if(dirVue == EST && tab[pos+1] == 0) pos += 1;
+				if(dirVue == OUEST && tab[pos-1] == 0) pos -= l;
+				break;
+			case DERRIERE_DIR:
+				break;
+		}
 	}
 
 	@Override
@@ -156,15 +176,15 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 
 	@Override
 	public void turnRight() {
-		dirVue = dirVue<<1;
-		if(dirVue > EST)dirVue=NORD;
+		dirVue = dirVue>>1;
+		if(dirVue == 0)dirVue=EST;
 	}
 
 
 	@Override
 	public void turnLeft() {
-		dirVue = dirVue>>1;
-		if(dirVue == 0)dirVue=EST;
+		dirVue = dirVue<<1;
+		if(dirVue > EST)dirVue=NORD;
 	}
 
 }
