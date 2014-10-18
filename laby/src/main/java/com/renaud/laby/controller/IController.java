@@ -5,4 +5,7 @@ public interface IController {
 	public void left();
 	public void down();
 	public void right();
+	
+	public void turnRight();
+	public void turnLeft();
 }

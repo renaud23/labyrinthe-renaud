@@ -15,6 +15,8 @@ public class Game implements IController{
 	private boolean down;
 	private boolean left;
 	private boolean right;
+	private boolean turnLeft;
+	private boolean turnRight;
 
 	private boolean start = false;
 
@@ -29,6 +31,8 @@ public class Game implements IController{
 					if(left)c.left();
 					if(right)c.right();
 					if(down)c.down();
+					if(turnLeft)c.turnLeft();
+					if(turnRight)c.turnRight();
 				}
 			}
 			locked = false;
@@ -36,6 +40,8 @@ public class Game implements IController{
 			this.down = false;
 			this.right = false;
 			this.left = false;
+			this.turnLeft = false;
+			this.turnRight = false;
 		}
 		
 	}
@@ -50,6 +56,7 @@ public class Game implements IController{
 
 	public void start() {
 		start = true;
+		
 	}
 
 	public boolean isStarted() {
@@ -74,5 +81,17 @@ public class Game implements IController{
 	@Override
 	public void right() {
 		if(!locked) right = true;
+	}
+
+	@Override
+	public void turnRight() {
+		if(!locked) turnRight = true;
+		
+	}
+
+	@Override
+	public void turnLeft() {
+		if(!locked) turnLeft = true;
+		
 	}
 }

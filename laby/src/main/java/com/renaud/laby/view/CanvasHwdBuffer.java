@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -21,11 +22,17 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private int largeur;
+	private int hauteur;
 
 	public CanvasHwdBuffer(int largeur, int hauteur) {
 		this.setPreferredSize(new Dimension(largeur, hauteur));
 		this.setIgnoreRepaint(true);
 		this.setVisible(true);
+		
+		this.largeur = hauteur;
+		this.hauteur = hauteur;
 	}
 
 	public void createStrategy() {
@@ -40,7 +47,10 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 	}
 
 	public void clean() {
-		// TODO Auto-generated method stub
+		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
+		
+		
+		gr.clearRect(0, 0, largeur, hauteur);
 
 	}
 
@@ -154,5 +164,12 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 
 		gr.drawImage(image, t, null);
 		gr.dispose();
+	}
+	
+	public void drawChar(String ch,int x,int y){
+		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
+		gr.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+		
+		gr.drawString(ch, x, y);
 	}
 }

@@ -268,4 +268,10 @@ public class JImageBuffer implements IDrawOperation {
 	public Image getImage() {
 		return this.image;
 	}
+
+	@Override
+	public void drawChar(String ch, int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
 }

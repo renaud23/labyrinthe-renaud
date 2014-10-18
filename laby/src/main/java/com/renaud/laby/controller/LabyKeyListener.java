@@ -2,8 +2,9 @@ package com.renaud.laby.controller;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
+
+
+
 
 public class LabyKeyListener extends KeyAdapter{
 	
@@ -30,6 +31,10 @@ public class LabyKeyListener extends KeyAdapter{
 			this.controllers.left();
 		}else if(c == KeyEvent.VK_RIGHT){
 			this.controllers.right();
+		}else if(c == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_LEFT){
+			this.controllers.turnLeft();
+		}else if(c == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_RIGHT){
+			this.controllers.turnRight();
 		}
 	}
 
