@@ -16,20 +16,27 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 	private boolean blocked = false;
 
 	private Labyrinthe laby;
-
+	private long speed;
 	private int length = 10;
 	private int[] positions;
 	private int dir = -1;
-	private Chrono ch = new Chrono(5);
+	private Chrono ch = new Chrono(50);
 	private IWormMouvement move;
 
 	public Worm(Labyrinthe laby) {
 		this.laby = laby;
-		
 		this.init();
-		
 		move = new ParcoursExhaustif(laby, this);
 	}
+	
+	public Worm(Labyrinthe laby, int length, IWormMouvement move,long speed) {
+		this.laby = laby;
+		this.length = length;
+		this.move = move;
+		this.ch = new Chrono(this.speed = speed);
+	}
+
+
 
 	@Override
 	public void activate() {

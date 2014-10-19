@@ -1,9 +1,10 @@
-package com.renaud.laby.view;
+package com.renaud.laby.main;
 
 import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.controller.LabyKeyListener;
 import com.renaud.laby.game.Game;
 import com.renaud.laby.player.Player;
+import com.renaud.laby.view.Fenetre;
 import com.renaud.laby.worm.Worm;
 
 public class MainPlayer {

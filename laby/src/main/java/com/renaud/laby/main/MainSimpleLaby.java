@@ -1,8 +1,9 @@
-package com.renaud.laby.view;
+package com.renaud.laby.main;
 
 import com.renaud.laby.Labyrinthe;
-import com.renaud.laby.controller.LabyKeyListener;
 import com.renaud.laby.game.Game;
+import com.renaud.laby.view.Fenetre;
+import com.renaud.laby.view.LabyDrawer;
 import com.renaud.laby.worm.Worm;
 
 public class MainSimpleLaby {
@@ -10,7 +11,7 @@ public class MainSimpleLaby {
 	public static void main(String[] args) {
 		Fenetre f = new Fenetre(400, 400);
 
-		Labyrinthe l = new Labyrinthe(10, 10);
+		Labyrinthe l = new Labyrinthe(30, 30);
 		l.genere();
 
 		// game
@@ -26,11 +27,6 @@ public class MainSimpleLaby {
 			g.addActivable(w);
 			f.addDrawable(w);
 		}
-		
-		
-		// controller
-//		LabyKeyListener lk = new LabyKeyListener(g);
-//		f.getFrame().addKeyListener(lk);
 		
 		g.start();
 	}
