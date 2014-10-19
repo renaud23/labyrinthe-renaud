@@ -43,7 +43,8 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 	
 	
 	
-	
+	private static final int PLEIN = 1;
+	private static final int VIDE = -1;
 	
 	
 	
@@ -60,6 +61,7 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 		dirVue = NORD;
 
 		this.memory = new int[laby.getLargeurTable() * laby.getHauteurTable()];
+		this.memory[pos] = VIDE;
 	}
 
 
@@ -147,13 +149,13 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 				left = lar;
 				break;
 		}
-		if(tab[pos+haut] == 1) memory[pos+haut] = 1; 
+		if(tab[pos+haut] == PLEIN) memory[pos+haut] = PLEIN; 
 		else{ 
-			memory[pos+haut] = -1;
-			if(tab[pos+2*haut] == 1) memory[pos+2*haut] = 1; else memory[pos+2*haut] = -1;
+			memory[pos+haut] = VIDE;
+			if(tab[pos+2*haut] == 1) memory[pos+2*haut] = PLEIN; else memory[pos+2*haut] = VIDE;
 		}
-		if(tab[pos+left] == 1) memory[pos+left] = 1; else memory[pos+left] = -1;
-		if(tab[pos-left] == 1) memory[pos-left] = 1; else memory[pos-left] = -1;
+		if(tab[pos+left] == PLEIN) memory[pos+left] = PLEIN; else memory[pos+left] = VIDE;
+		if(tab[pos-left] == PLEIN) memory[pos-left] = PLEIN; else memory[pos-left] = VIDE;
 	}
 	
 	
