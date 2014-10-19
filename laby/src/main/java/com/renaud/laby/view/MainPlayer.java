@@ -4,6 +4,7 @@ import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.controller.LabyKeyListener;
 import com.renaud.laby.game.Game;
 import com.renaud.laby.player.Player;
+import com.renaud.laby.worm.Worm;
 
 public class MainPlayer {
 
@@ -16,8 +17,6 @@ public class MainPlayer {
 		// game
 		Game g = new Game();
 		f.setGame(g);
-		 
-		
 		
 		Player p = new Player(l);
 		g.addActivable(p);

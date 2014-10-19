@@ -7,6 +7,14 @@ import com.renaud.laby.view.IDrawOperation;
 
 public class RenderWall2 {
 	
+	/*
+	 * 
+	 * n 128 s 64 o 32 e 16
+	 * 
+	 * n 8 s 4 e 2 o 1
+	 * 
+	 */
+	
 	private static int largeur = 15;
 	private static int hauteur = 8;
 	
@@ -198,8 +206,8 @@ public class RenderWall2 {
 		"\\           |##",
 		"#\\          |##",
 		"##\\_________|##",
-		"###|########|##",
-		"###|########|##",
+		"###|        |##",
+		"###|________|##",
 		"##/_________|##",
 		"#/___________\\#",
 		"/_____________\\"
