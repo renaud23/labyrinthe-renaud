@@ -1,5 +1,6 @@
 package com.renaud.laby.player;
 
+import java.awt.Color;
 import java.util.Random;
 
 import com.renaud.laby.Labyrinthe;
@@ -8,6 +9,7 @@ import com.renaud.laby.game.IActivate;
 import com.renaud.laby.view.DrawOperationAware;
 import com.renaud.laby.view.IDrawOperation;
 import com.renaud.laby.view.IDrawable;
+import com.renaud.laby.view.LabyDrawer;
 
 public class Player implements IController,IActivate, IDrawable, DrawOperationAware{
 	
@@ -27,6 +29,7 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 	private final int OUEST = 2;
 
 	private IDrawOperation op;
+	private LabyDrawer ldrw;
 	
 	private RenderWall2 rw = new RenderWall2();
 	
@@ -56,7 +59,8 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 		}
 		
 		dirVue = NORD;
-//		if(laby.getTable()[pos-1] == 0 && laby.getTable()[pos+1] == 0) dirVue = EST;
+
+		this.ldrw = new LabyDrawer(laby, 0, 200);
 	}
 
 
@@ -117,7 +121,13 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 			case SUD:
 				if(tab[pos-1] == 0) kind += DROITE_DIR;
 				if(tab[pos+1] == 0) kind += GAUCHE_DIR;
-				if(tab[pos+lar] == 0) kind += HAUT_DIR;
+				if(tab[pos+lar] == 0){
+					kind += HAUT_DIR;
+					int p = pos+lar;
+					if(tab[p+lar] == 0) kind += HAUT_DIR1;
+					if(tab[p-1] == 0)kind += DROITE_DIR1;
+					if(tab[p+1] == 0)kind += GAUCHE_DIR1;
+				}
 				break;
 				
 			case NORD:
@@ -137,14 +147,23 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 				if(tab[pos+lar] == 0) kind += GAUCHE_DIR;
 				if(tab[pos-1] == 0){
 					kind += HAUT_DIR;
-					
+					int p = pos-1;
+					if(tab[p-lar] == 0) kind += DROITE_DIR1;
+					if(tab[p+lar] == 0)kind += GAUCHE_DIR1;
+					if(tab[p-1] == 0)kind += HAUT_DIR1;
 				}
 				break;
 				
 			case EST:
 				if(tab[pos+lar] == 0) kind += DROITE_DIR;
 				if(tab[pos-lar] == 0) kind += GAUCHE_DIR;
-				if(tab[pos+1] == 0) kind += HAUT_DIR;
+				if(tab[pos+1] == 0){
+					kind += HAUT_DIR;
+					int p = pos+1;
+					if(tab[p-lar] == 0) kind += GAUCHE_DIR1;
+					if(tab[p+lar] == 0)kind += DROITE_DIR1;
+					if(tab[p+1] == 0)kind += HAUT_DIR1;
+				}
 				break;
 		}
 		
@@ -157,6 +176,12 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 		if(dirVue == OUEST) op.drawChar("OUEST", 10, 150);
 		op.drawChar("Code "+kind, 10, 170);
 		op.drawChar("Pos "+pos, 10, 190);
+		
+		
+		this.ldrw.setDrawOperation(op);
+		this.ldrw.draw();
+		this.op.fillRect(Color.green, 0 + (pos%lar)*5 , 200+(pos/lar)*5, 5, 5, 1.0f);
+		
 		
 	}
 	

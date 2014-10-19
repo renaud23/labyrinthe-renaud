@@ -22,7 +22,6 @@ public class MainPlayer {
 		Player p = new Player(l);
 		g.addActivable(p);
 		f.addDrawable(p);
-		f.addDrawable(new LabyDrawer(l,0,200));
 		
 		
 		f.getFrame().addKeyListener(new LabyKeyListener(g));
