@@ -9,9 +9,17 @@ public class LabyDrawer implements IDrawable, DrawOperationAware {
 	private IDrawOperation drawOperation;
 
 	private Labyrinthe laby;
+	private int x;
+	private int y;
 
 	public LabyDrawer(Labyrinthe laby) {
 		this.laby = laby;
+	}
+
+	public LabyDrawer(Labyrinthe laby, int x, int y) {
+		this.laby = laby;
+		this.x = x;
+		this.y = y;
 	}
 
 	@Override
@@ -34,8 +42,8 @@ public class LabyDrawer implements IDrawable, DrawOperationAware {
 		
 		for(int i=0;i<laby.getHauteurTable();i++){
 			for(int j=0;j<laby.getLargeurTable();j++){
-				if(t[laby.getLargeurTable()*i+j] == 1) drawOperation.fillRect(Color.black, j*l, i*h, l, h, 1.0f);
-				else drawOperation.fillRect(Color.yellow, j*l, i*h, l, h, 1.0f);
+				if(t[laby.getLargeurTable()*i+j] == 1) drawOperation.fillRect(Color.black, x + j*l, y + i*h, l, h, 1.0f);
+				else drawOperation.fillRect(Color.yellow, x + j*l, y + i*h, l, h, 1.0f);
 			}
 		}
 

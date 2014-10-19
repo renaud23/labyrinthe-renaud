@@ -10,7 +10,7 @@ public class MainPlayer {
 	public static void main(String[] args) {
 		Fenetre f = new Fenetre(400, 400);
 
-		Labyrinthe l = new Labyrinthe(3, 3);
+		Labyrinthe l = new Labyrinthe(10, 10);
 		l.genere();
 
 		// game
@@ -22,6 +22,7 @@ public class MainPlayer {
 		Player p = new Player(l);
 		g.addActivable(p);
 		f.addDrawable(p);
+		f.addDrawable(new LabyDrawer(l,0,200));
 		
 		
 		f.getFrame().addKeyListener(new LabyKeyListener(g));

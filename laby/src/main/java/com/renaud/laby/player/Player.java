@@ -13,8 +13,13 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 	
 	private final int GAUCHE_DIR = 2;
 	private final int DROITE_DIR = 1;
-	private final int DEVANT_DIR = 8;
-	private final int DERRIERE_DIR = 4;
+	private final int HAUT_DIR = 8;
+	private final int BAS_DIR = 4;
+	
+	private final int GAUCHE_DIR1 = 32;
+	private final int DROITE_DIR1 = 16;
+	private final int HAUT_DIR1 = 128;
+	private final int BAS_DIR1 = 64;
 	
 	private final int NORD = 1;
 	private final int SUD = 4;
@@ -23,7 +28,7 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 
 	private IDrawOperation op;
 	
-	private RenderWall rw = new RenderWall();
+	private RenderWall2 rw = new RenderWall2();
 	
 	private Labyrinthe laby;
 	private int pos = 0;
@@ -67,7 +72,7 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 	
 	@Override
 	public void up() {
-		this.move(DEVANT_DIR);
+		this.move(HAUT_DIR);
 	}
 
 	@Override
@@ -77,7 +82,7 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 
 	@Override
 	public void down() {
-		this.move(DERRIERE_DIR);
+		this.move(BAS_DIR);
 	}
 
 	@Override
@@ -112,25 +117,34 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 			case SUD:
 				if(tab[pos-1] == 0) kind += DROITE_DIR;
 				if(tab[pos+1] == 0) kind += GAUCHE_DIR;
-				if(tab[pos+lar] == 0) kind += DEVANT_DIR;
+				if(tab[pos+lar] == 0) kind += HAUT_DIR;
 				break;
 				
 			case NORD:
 				if(tab[pos+1] == 0) kind += DROITE_DIR;
 				if(tab[pos-1] == 0) kind += GAUCHE_DIR;
-				if(tab[pos-lar] == 0) kind += DEVANT_DIR;
+				if(tab[pos-lar] == 0){
+					kind += HAUT_DIR;
+					int p = pos-lar;
+					if(tab[p-lar] == 0) kind += HAUT_DIR1;
+					if(tab[p-1] == 0)kind += GAUCHE_DIR1;
+					if(tab[p+1] == 0)kind += DROITE_DIR1;
+				}
 				break;
 				
 			case OUEST:
 				if(tab[pos-lar] == 0) kind += DROITE_DIR;
 				if(tab[pos+lar] == 0) kind += GAUCHE_DIR;
-				if(tab[pos-1] == 0) kind += DEVANT_DIR;
+				if(tab[pos-1] == 0){
+					kind += HAUT_DIR;
+					
+				}
 				break;
 				
 			case EST:
 				if(tab[pos+lar] == 0) kind += DROITE_DIR;
 				if(tab[pos-lar] == 0) kind += GAUCHE_DIR;
-				if(tab[pos+1] == 0) kind += DEVANT_DIR;
+				if(tab[pos+1] == 0) kind += HAUT_DIR;
 				break;
 		}
 		
@@ -141,23 +155,41 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 		if(dirVue == SUD) op.drawChar("SUD", 10, 150);
 		if(dirVue == EST) op.drawChar("EST", 10, 150);
 		if(dirVue == OUEST) op.drawChar("OUEST", 10, 150);
+		op.drawChar("Code "+kind, 10, 170);
+		op.drawChar("Pos "+pos, 10, 190);
+		
 	}
 	
 	private void move(int code){
 		int[] tab = laby.getTable();
-		int l = laby.getLargeurTable();
+		int lar = laby.getLargeurTable();
 		switch(code){
 			case GAUCHE_DIR:
+				if(dirVue == NORD && tab[pos-1] == 0) pos -= 1;
+				if(dirVue == SUD && tab[pos+1] == 0) pos += 1;
+				if(dirVue == EST && tab[pos-lar] == 0) pos -= lar;
+				if(dirVue == OUEST && tab[pos+lar] == 0) pos += lar;
 				break;
+				
 			case DROITE_DIR:
+				if(dirVue == NORD && tab[pos+1] == 0) pos += 1;
+				if(dirVue == SUD && tab[pos-1] == 0) pos -= 1;
+				if(dirVue == EST && tab[pos+lar] == 0) pos += lar;
+				if(dirVue == OUEST && tab[pos-lar] == 0) pos -= lar;
 				break;
-			case DEVANT_DIR:
-				if(dirVue == NORD && tab[pos-l] == 0) pos -= l;
-				if(dirVue == SUD && tab[pos+l] == 0) pos += l;
+				
+			case HAUT_DIR:
+				if(dirVue == NORD && tab[pos-lar] == 0) pos -= lar;
+				if(dirVue == SUD && tab[pos+lar] == 0) pos += lar;
 				if(dirVue == EST && tab[pos+1] == 0) pos += 1;
-				if(dirVue == OUEST && tab[pos-1] == 0) pos -= l;
+				if(dirVue == OUEST && tab[pos-1] == 0) pos -= 1;
 				break;
-			case DERRIERE_DIR:
+				
+			case BAS_DIR:
+				if(dirVue == NORD && tab[pos+lar] == 0) pos += lar;
+				if(dirVue == SUD && tab[pos-lar] == 0) pos -= lar;
+				if(dirVue == EST && tab[pos-1] == 0) pos -= 1;
+				if(dirVue == OUEST && tab[pos+1] == 0) pos += 1;
 				break;
 		}
 	}
