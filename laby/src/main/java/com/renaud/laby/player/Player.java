@@ -29,7 +29,6 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 	private final int OUEST = 2;
 
 	private IDrawOperation op;
-	private LabyDrawer ldrw;
 	
 	private RenderWall2 rw = new RenderWall2();
 	
@@ -39,7 +38,7 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 	
 	private Random r = new Random();
 	
-	
+	private int[] memory;
 	
 	
 	
@@ -60,15 +59,13 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 		
 		dirVue = NORD;
 
-		this.ldrw = new LabyDrawer(laby, 0, 200);
+		this.memory = new int[laby.getLargeurTable() * laby.getHauteurTable()];
 	}
 
 
 	@Override
 	public void activate() {
-
-
-		
+		this.look();
 	}
 	
 	
@@ -81,7 +78,9 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 
 	@Override
 	public void left() {
-		this.move(GAUCHE_DIR);
+//		this.move(GAUCHE_DIR);
+		dirVue = dirVue<<1;
+		if(dirVue > EST)dirVue=NORD;
 	}
 
 	@Override
@@ -91,7 +90,21 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 
 	@Override
 	public void right() {
-		this.move(DROITE_DIR);
+//		this.move(DROITE_DIR);
+		dirVue = dirVue>>1;
+		if(dirVue == 0)dirVue=EST;
+	}
+	
+	@Override
+	public void turnRight() {
+		dirVue = dirVue>>1;
+		if(dirVue == 0)dirVue=EST;
+	}
+
+	@Override
+	public void turnLeft() {
+		dirVue = dirVue<<1;
+		if(dirVue > EST)dirVue=NORD;
 	}
 
 	@Override
@@ -111,6 +124,39 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 		
 	}
 
+	private void look(){
+		int[] tab = laby.getTable();
+		int lar = laby.getLargeurTable();
+		int haut = 0;
+		int left = 0;
+		switch(dirVue){
+			case NORD:
+				haut = -lar;
+				left = -1;
+				break;
+			case SUD:
+				haut = lar;
+				left = 1;
+				break;
+			case OUEST:
+				haut = -1;
+				left = -lar;
+				break;
+			case EST:
+				haut = 1;
+				left = lar;
+				break;
+		}
+		if(tab[pos+haut] == 1) memory[pos+haut] = 1; 
+		else{ 
+			memory[pos+haut] = -1;
+			if(tab[pos+2*haut] == 1) memory[pos+2*haut] = 1; else memory[pos+2*haut] = -1;
+		}
+		if(tab[pos+left] == 1) memory[pos+left] = 1; else memory[pos+left] = -1;
+		if(tab[pos-left] == 1) memory[pos-left] = 1; else memory[pos-left] = -1;
+	}
+	
+	
 	@Override
 	public void draw() {
 		int kind = 0;
@@ -178,16 +224,23 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 		op.drawChar("Pos "+pos, 10, 190);
 		
 		
-		this.ldrw.setDrawOperation(op);
-		this.ldrw.draw();
-		this.op.fillRect(Color.green, 0 + (pos%lar)*5 , 200+(pos/lar)*5, 5, 5, 1.0f);
+		for(int i=0;i<laby.getHauteurTable();i++){
+			for(int j=0;j<laby.getLargeurTable();j++){
+				if(memory[i*lar+j] == 1)this.op.fillRect(Color.black, 0 + j*5 , 200+i*5, 5, 5, 1.0f);
+				else if((i*lar+j) == pos) this.op.fillRect(Color.green, 0 + j*5 , 200+i*5, 5, 5, 1.0f);
+				else if(memory[i*lar+j] == -1) this.op.fillRect(Color.yellow, 0 + j*5 , 200+i*5, 5, 5, 1.0f);
+				else this.op.fillRect(Color.gray, 0 + j*5 , 200+i*5, 5, 5, 1.0f);
+			}
+		}
+	
 		
 		
 	}
 	
-	private void move(int code){
+	private boolean move(int code){
 		int[] tab = laby.getTable();
 		int lar = laby.getLargeurTable();
+		int posInit = pos;
 		switch(code){
 			case GAUCHE_DIR:
 				if(dirVue == NORD && tab[pos-1] == 0) pos -= 1;
@@ -217,6 +270,9 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 				if(dirVue == OUEST && tab[pos+1] == 0) pos += 1;
 				break;
 		}
+		
+		if(pos != posInit) return true;
+		else return false;
 	}
 
 	@Override
@@ -231,17 +287,6 @@ public class Player implements IController,IActivate, IDrawable, DrawOperationAw
 	}
 
 
-	@Override
-	public void turnRight() {
-		dirVue = dirVue>>1;
-		if(dirVue == 0)dirVue=EST;
-	}
-
-
-	@Override
-	public void turnLeft() {
-		dirVue = dirVue<<1;
-		if(dirVue > EST)dirVue=NORD;
-	}
+	
 
 }
