@@ -18,7 +18,6 @@ public class MainGameOfWorm {
 		Labyrinthe l = new Labyrinthe(15, 15);
 		l.genere();
 		Player p = new Player(l);
-		Worm w = new Worm(l, 5, 1000);
 
 		List<Worm> ws = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {

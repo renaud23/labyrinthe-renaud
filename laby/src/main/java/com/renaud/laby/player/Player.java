@@ -30,6 +30,8 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 	private IDrawOperation op;
 
 	private RenderWall2 rw = new RenderWall2();
+	
+	private RenderWall3 rd3 = new RenderWall3();
 
 	private Labyrinthe laby;
 	private int position = 0;
@@ -240,6 +242,7 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 		}
 
 		this.rw.render(op, kind);
+		this.rd3.render(op, kind);
 
 		if (directionRegard == NORD)
 			op.drawChar("NORD", 10, 150);

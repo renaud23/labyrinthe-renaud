@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.player.Player;
+import com.renaud.laby.player.RenderWall3;
 import com.renaud.laby.view.DrawOperationAware;
 import com.renaud.laby.view.IDrawOperation;
 import com.renaud.laby.view.IDrawable;
@@ -15,6 +16,7 @@ public class GameOfWorm extends Game implements IActivate, IDrawable, DrawOperat
 
 	private IDrawOperation op;
 	private LabyDrawer ldrw;
+	
 
 	private Player p;
 	private List<Worm> ws;
@@ -98,10 +100,10 @@ public class GameOfWorm extends Game implements IActivate, IDrawable, DrawOperat
 		if (this.onFirst) {
 			this.op.fillCircle(Color.red, 50, 50, 40, 1.0f);
 		}
-		else
-			if (this.onSecond) {
-				this.op.fillCircle(Color.red, 60, 50, 20, 1.0f);
-			}
+		else if (this.onSecond) {
+			this.op.fillCircle(Color.red, 60, 50, 20, 1.0f);
+		}
+		
 	}
 
 	@Override
