@@ -11,6 +11,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 
@@ -22,7 +23,7 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private int largeur;
 	private int hauteur;
 
@@ -30,7 +31,7 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 		this.setPreferredSize(new Dimension(largeur, hauteur));
 		this.setIgnoreRepaint(true);
 		this.setVisible(true);
-		
+
 		this.largeur = hauteur;
 		this.hauteur = hauteur;
 	}
@@ -48,8 +49,7 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 
 	public void clean() {
 		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
-		
-		
+
 		gr.clearRect(0, 0, largeur, hauteur);
 
 	}
@@ -165,11 +165,21 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 		gr.drawImage(image, t, null);
 		gr.dispose();
 	}
-	
-	public void drawChar(String ch,int x,int y){
+
+	public void drawChar(String ch, int x, int y) {
 		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
 		gr.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-		
+
 		gr.drawString(ch, x, y);
+	}
+
+	@Override
+	public void fillCircle(Color color, double x, double y, double rayon, float alpha) {
+		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
+		gr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		gr.setColor(color);
+		Shape s = new Ellipse2D.Double(x, y, rayon, rayon);
+		gr.fill(s);
+
 	}
 }

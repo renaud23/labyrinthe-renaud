@@ -5,34 +5,41 @@ import java.util.List;
 
 import com.renaud.laby.controller.IController;
 
-public class Game implements IController{
+public class Game implements IController {
 
 	private List<IActivate> activables = new ArrayList<IActivate>();
-	
+
 	private boolean locked;
-	
-	private boolean up;
-	private boolean down;
-	private boolean left;
-	private boolean right;
-	private boolean turnLeft;
-	private boolean turnRight;
+
+	protected boolean up;
+	protected boolean down;
+	protected boolean left;
+	protected boolean right;
+	protected boolean turnLeft;
+	protected boolean turnRight;
 
 	private boolean start = false;
 
 	public void activate() {
-		if (start){
+		if (start) {
 			locked = true;
-			for (IActivate a : this.activables){
-				if(a.isActive()) a.activate();
-				if(a instanceof IController){
-					IController c = (IController)a;
-					if(up) c.up();
-					if(left)c.left();
-					if(right)c.right();
-					if(down)c.down();
-					if(turnLeft)c.turnLeft();
-					if(turnRight)c.turnRight();
+			for (IActivate a : this.activables) {
+				if (a.isActive())
+					a.activate();
+				if (a instanceof IController) {
+					IController c = (IController) a;
+					if (up)
+						c.up();
+					if (left)
+						c.left();
+					if (right)
+						c.right();
+					if (down)
+						c.down();
+					if (turnLeft)
+						c.turnLeft();
+					if (turnRight)
+						c.turnRight();
 				}
 			}
 			locked = false;
@@ -43,7 +50,7 @@ public class Game implements IController{
 			this.turnLeft = false;
 			this.turnRight = false;
 		}
-		
+
 	}
 
 	public void addActivable(IActivate a) {
@@ -56,7 +63,7 @@ public class Game implements IController{
 
 	public void start() {
 		start = true;
-		
+
 	}
 
 	public boolean isStarted() {
@@ -65,33 +72,40 @@ public class Game implements IController{
 
 	@Override
 	public void up() {
-		if(!locked) up = true;
+		if (!locked)
+			up = true;
 	}
 
 	@Override
 	public void left() {
-		if(!locked) left = true;
+		if (!locked)
+			left = true;
 	}
 
 	@Override
 	public void down() {
-		if(!locked) down = true;
+		if (!locked)
+			down = true;
 	}
 
 	@Override
 	public void right() {
-		if(!locked) right = true;
+		if (!locked)
+			right = true;
 	}
 
 	@Override
 	public void turnRight() {
-		if(!locked) turnRight = true;
-		
+		if (!locked)
+			turnRight = true;
+
 	}
 
 	@Override
 	public void turnLeft() {
-		if(!locked) turnLeft = true;
-		
+		if (!locked)
+			turnLeft = true;
+
 	}
+
 }

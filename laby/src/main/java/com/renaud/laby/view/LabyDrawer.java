@@ -39,11 +39,13 @@ public class LabyDrawer implements IDrawable, DrawOperationAware {
 		int[] t = laby.getTable();
 		int h = 5;
 		int l = 5;
-		
-		for(int i=0;i<laby.getHauteurTable();i++){
-			for(int j=0;j<laby.getLargeurTable();j++){
-				if(t[laby.getLargeurTable()*i+j] == 1) drawOperation.fillRect(Color.black, x + j*l, y + i*h, l, h, 1.0f);
-				else drawOperation.fillRect(Color.yellow, x + j*l, y + i*h, l, h, 1.0f);
+
+		for (int i = 0; i < laby.getHauteurTable(); i++) {
+			for (int j = 0; j < laby.getLargeurTable(); j++) {
+				if (t[laby.getLargeurTable() * i + j] == 1)
+					drawOperation.fillRect(Color.black, x + j * l, y + i * h, l, h, 1.0f);
+				else
+					drawOperation.fillRect(Color.yellow, x + j * l, y + i * h, l, h, 1.0f);
 			}
 		}
 

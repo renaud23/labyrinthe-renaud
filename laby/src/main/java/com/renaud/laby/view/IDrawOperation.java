@@ -20,7 +20,9 @@ public interface IDrawOperation {
 
 	public void fillRect(Color color, double x, double y, double width, double height, float alpha);
 
+	public void fillCircle(Color color, double x, double y, double rayon, float alpha);
+
 	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale, float alpha, Composite composite);
-	
-	public void drawChar(String ch,int x,int y);
+
+	public void drawChar(String ch, int x, int y);
 }

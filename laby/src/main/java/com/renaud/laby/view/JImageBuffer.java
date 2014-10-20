@@ -272,6 +272,12 @@ public class JImageBuffer implements IDrawOperation {
 	@Override
 	public void drawChar(String ch, int x, int y) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void fillCircle(Color color, double x, double y, double rayon, float alpha) {
+		// TODO Auto-generated method stub
+
 	}
 }

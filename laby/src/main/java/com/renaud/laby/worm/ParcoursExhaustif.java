@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import com.renaud.laby.Labyrinthe;
 
-public class ParcoursExhaustif extends ParcoursAvecMemoire implements IWormMouvement {
+public class ParcoursExhaustif extends MarcheAuHazardMemoire implements IWormMouvement {
 
 	private Labyrinthe laby;
 	private Worm w;
