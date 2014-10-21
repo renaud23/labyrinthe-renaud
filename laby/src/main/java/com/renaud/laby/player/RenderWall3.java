@@ -13,28 +13,28 @@ public class RenderWall3 {
 	private int sx = 300;
 	private int sy = 100;
 	private int h = 100;
-	private double lim = 20;
+	private double lim = 200;
 	
 	public void render(IDrawOperation op,int code){
 		Point[] a ={ 
-				new Point(-25, 0) 
-				,new Point(-25, 50) 
-				,new Point(-25, 100),
-				new Point(25, 0) 
-				,new Point(25, 50) 
-				,new Point(25, 100)} ;
-		
+				new Point(-50, 0) 
+				,new Point(-50, 100) 
+				,new Point(-50, 200),
+				new Point(50, 0) 
+				,new Point(50, 100) 
+				,new Point(50, 200)} ;
+		double lim = 400;
 		for(Point p : a){
 			double x = p.x;
 			double y = p.y;
-			double d = distOrigine(p);
-			double cx = x / lim;
-			double cy = 1 + y / lim;
-			x -= d*cx;
-			y -= 1 / d*cy;
+			
+			double d = p.y;
+			x = p.x -  p.x / lim * d;
+			y = p.y *  Math.abs(p.x) / lim;
+
 			
 			
-			op.drawRect(Color.red, sx-(int)p.x, sy-p.y, 2, 2);
+			op.drawRect(Color.red, sx+(int)x, sy-(int)y, 2, 2);
 		}
 		
 	}
