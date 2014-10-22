@@ -27,4 +27,8 @@ public interface IDrawOperation {
 	public void drawChar(String ch, int x, int y);
 	
 	public void drawLine(Color color, int x1, int y1, int x2,int y2,float alpha);
+	
+	public void fillPolygone(Color color, int[] x, int[] y, float alpha);
+	
+	public void drawPolygone(Color color, int[] x, int[] y, float alpha);
 }

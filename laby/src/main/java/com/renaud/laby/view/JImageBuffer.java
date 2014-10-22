@@ -287,4 +287,16 @@ public class JImageBuffer implements IDrawOperation {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void fillPolygone(Color color, int[] x, int[] y, float alpha) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void drawPolygone(Color color, int[] x, int[] y, float alpha) {
+		// TODO Auto-generated method stub
+		
+	}
 }

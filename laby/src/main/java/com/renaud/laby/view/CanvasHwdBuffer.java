@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -190,5 +191,25 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 		gr.setColor(color);
 		gr.drawLine(x1, y1, x2, y2);
 		
+	}
+
+
+	public void fillPolygone(Color color, int[] x, int[] y, float alpha) {
+		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
+		gr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		
+		gr.setColor(color);
+		Shape s = new Polygon(x, y, x.length);
+		gr.fill(s);
+	}
+	
+	
+	public void drawPolygone(Color color, int[] x, int[] y, float alpha) {
+		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
+		gr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		
+		gr.setColor(color);
+		Shape s = new Polygon(x, y, x.length);
+		gr.draw(s);
 	}
 }

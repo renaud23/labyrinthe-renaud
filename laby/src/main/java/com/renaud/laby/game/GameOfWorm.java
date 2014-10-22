@@ -97,11 +97,14 @@ public class GameOfWorm extends Game implements IActivate, IDrawable, DrawOperat
 		}
 		this.p.draw();
 
+		// le ver
 		if (this.onFirst) {
 			this.op.fillCircle(Color.red, 50, 50, 40, 1.0f);
+			this.op.fillCircle(Color.blue, 235, 50, 30, 1.0f);
 		}
 		else if (this.onSecond) {
 			this.op.fillCircle(Color.red, 60, 50, 20, 1.0f);
+			this.op.fillCircle(Color.blue, 245, 60, 10, 1.0f);
 		}
 		
 	}
