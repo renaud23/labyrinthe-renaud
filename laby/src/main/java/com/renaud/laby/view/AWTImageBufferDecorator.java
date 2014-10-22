@@ -110,4 +110,11 @@ public class AWTImageBufferDecorator extends JPanel implements IDrawOperation {
 
 	}
 
+	@Override
+	public void drawLine(Color color, int x1, int y1, int x2, int y2,
+			float alpha) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

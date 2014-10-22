@@ -25,4 +25,6 @@ public interface IDrawOperation {
 	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scale, float alpha, Composite composite);
 
 	public void drawChar(String ch, int x, int y);
+	
+	public void drawLine(Color color, int x1, int y1, int x2,int y2,float alpha);
 }

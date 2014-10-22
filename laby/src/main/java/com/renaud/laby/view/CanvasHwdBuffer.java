@@ -182,4 +182,13 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 		gr.fill(s);
 
 	}
+
+	@Override
+	public void drawLine(Color color, int x1, int y1, int x2, int y2, float alpha) {
+		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
+		gr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		gr.setColor(color);
+		gr.drawLine(x1, y1, x2, y2);
+		
+	}
 }

@@ -12,15 +12,15 @@ import com.renaud.laby.view.IDrawable;
 
 public class Player implements IController, IActivate, IDrawable, DrawOperationAware {
 
-	private static final int GAUCHE_DIR = 2;
-	private static final int DROITE_DIR = 1;
-	private static final int HAUT_DIR = 8;
-	private static final int BAS_DIR = 4;
+	public static final int GAUCHE_DIR = 2;
+	public static final int DROITE_DIR = 1;
+	public static final int HAUT_DIR = 8;
+	public static final int BAS_DIR = 4;
 
-	private static final int GAUCHE_DIR1 = 32;
-	private static final int DROITE_DIR1 = 16;
-	private static final int HAUT_DIR1 = 128;
-	private static final int BAS_DIR1 = 64;
+	public static final int GAUCHE_DIR1 = 32;
+	public static final int DROITE_DIR1 = 16;
+	public static final int HAUT_DIR1 = 128;
+	public static final int BAS_DIR1 = 64;
 
 	public static final int NORD = 1;
 	public static final int SUD = 4;
