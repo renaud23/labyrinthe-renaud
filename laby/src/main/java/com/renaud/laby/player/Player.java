@@ -31,7 +31,7 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 
 	private RenderWall2 rw = new RenderWall2();
 	
-	private RenderWall3 rd3 = new RenderWall3();
+	private RenderWall3D rd3 = new RenderWall3D();
 
 	private Labyrinthe laby;
 	private int position = 0;

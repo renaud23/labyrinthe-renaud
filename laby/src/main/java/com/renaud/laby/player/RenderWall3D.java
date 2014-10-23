@@ -3,7 +3,7 @@ package com.renaud.laby.player;
 import java.awt.Color;
 import com.renaud.laby.view.IDrawOperation;
 
-public class RenderWall3 {
+public class RenderWall3D {
 	
 	private Color color_wall = Color.gray;
 	private Color color_wall_dark = Color.gray;
@@ -22,7 +22,6 @@ public class RenderWall3 {
 			this.y = y;
 			this.z = z;
 		}
-		
 	}
 	
 	private Point3D[] WALL_HAUT = {new Point3D(-largeur_mur/2,0,0),new Point3D(-largeur_mur/2,hauteur_mur,0),new Point3D(largeur_mur/2,hauteur_mur,0),new Point3D(largeur_mur/2,0,0)};
@@ -91,7 +90,7 @@ public class RenderWall3 {
 	}
 	
 
-	private void drawWAll(Color c,IDrawOperation op,Point3D[] wall,int dist,int dx,int dy){
+	protected void drawWAll(Color c,IDrawOperation op,Point3D[] wall,int dist,int dx,int dy){
 		
 		Point3D a = new Point3D(0,0,0);
 		Point3D b = new Point3D(0,0,0);
