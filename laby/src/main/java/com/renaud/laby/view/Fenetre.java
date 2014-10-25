@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
-import java.util.Spliterator;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.function.Consumer;
 
 import javax.swing.JFrame;
 
@@ -141,17 +139,6 @@ public class Fenetre extends Observable implements Iterable<IDrawable> {
 		this.game = game;
 	}
 
-	@Override
-	public void forEach(Consumer<? super IDrawable> action) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Spliterator<IDrawable> spliterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 

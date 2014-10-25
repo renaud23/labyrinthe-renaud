@@ -31,7 +31,7 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 
 	private RenderWall2 rw = new RenderWall2();
 	
-	private RenderWall3D rd3 = new RenderWall3D();
+	private RenderWall3DEx rd3;
 
 	private Labyrinthe laby;
 	private int position = 0;
@@ -57,6 +57,8 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 
 		this.memory = new int[laby.getLargeurTable() * laby.getHauteurTable()];
 		this.memory[position] = VIDE;
+		
+		this.rd3 = new RenderWall3DEx(laby, this);
 	}
 
 	@Override
@@ -242,7 +244,7 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 		}
 
 		this.rw.render(op, kind);
-		this.rd3.render(op, kind);
+		this.rd3.render(op);
 
 		if (directionRegard == NORD)
 			op.drawChar("NORD", 10, 150);
@@ -271,6 +273,8 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 		}
 
 	}
+	
+	
 
 	private boolean move(int code) {
 		int[] tab = laby.getTable();
