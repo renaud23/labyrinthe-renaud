@@ -16,6 +16,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 
 public class JImageBuffer implements IDrawOperation {
@@ -223,7 +224,7 @@ public class JImageBuffer implements IDrawOperation {
 
 	}
 
-	public void drawPart(Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2) {
+	public void drawImage(Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2) {
 		Graphics2D gr = this.image.createGraphics();
 		gr.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
 		gr.dispose();
@@ -296,6 +297,12 @@ public class JImageBuffer implements IDrawOperation {
 
 	@Override
 	public void drawPolygone(Color color, int[] x, int[] y, float alpha) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void drawPolygone(int[] x, int[] y, BufferedImage img) {
 		// TODO Auto-generated method stub
 		
 	}

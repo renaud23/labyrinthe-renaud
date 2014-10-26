@@ -17,11 +17,6 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 	public static final int HAUT_DIR = 8;
 	public static final int BAS_DIR = 4;
 
-	public static final int GAUCHE_DIR1 = 32;
-	public static final int DROITE_DIR1 = 16;
-	public static final int HAUT_DIR1 = 128;
-	public static final int BAS_DIR1 = 64;
-
 	public static final int NORD = 1;
 	public static final int SUD = 4;
 	public static final int EST = 8;
@@ -31,7 +26,7 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 
 	private RenderWall2 rw = new RenderWall2();
 	
-	private RenderWall3DEx rd3;
+	private RenderWall3D rd3;
 
 	private Labyrinthe laby;
 	private int position = 0;
@@ -58,7 +53,7 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 		this.memory = new int[laby.getLargeurTable() * laby.getHauteurTable()];
 		this.memory[position] = VIDE;
 		
-		this.rd3 = new RenderWall3DEx(laby, this);
+		this.rd3 = new RenderWall3D(laby, this);
 	}
 
 	@Override
@@ -170,78 +165,9 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 	@Override
 	public void draw() {
 		int kind = 0;
-		int[] tab = laby.getTable();
 		int lar = laby.getLargeurTable();
 
-		switch (directionRegard) {
-			case SUD:
-				if (tab[position - 1] == 0)
-					kind += DROITE_DIR;
-				if (tab[position + 1] == 0)
-					kind += GAUCHE_DIR;
-				if (tab[position + lar] == 0) {
-					kind += HAUT_DIR;
-					int p = position + lar;
-					if (tab[p + lar] == 0)
-						kind += HAUT_DIR1;
-					if (tab[p - 1] == 0)
-						kind += DROITE_DIR1;
-					if (tab[p + 1] == 0)
-						kind += GAUCHE_DIR1;
-				}
-				break;
-
-			case NORD:
-				if (tab[position + 1] == 0)
-					kind += DROITE_DIR;
-				if (tab[position - 1] == 0)
-					kind += GAUCHE_DIR;
-				if (tab[position - lar] == 0) {
-					kind += HAUT_DIR;
-					int p = position - lar;
-					if (tab[p - lar] == 0)
-						kind += HAUT_DIR1;
-					if (tab[p - 1] == 0)
-						kind += GAUCHE_DIR1;
-					if (tab[p + 1] == 0)
-						kind += DROITE_DIR1;
-				}
-				break;
-
-			case OUEST:
-				if (tab[position - lar] == 0)
-					kind += DROITE_DIR;
-				if (tab[position + lar] == 0)
-					kind += GAUCHE_DIR;
-				if (tab[position - 1] == 0) {
-					kind += HAUT_DIR;
-					int p = position - 1;
-					if (tab[p - lar] == 0)
-						kind += DROITE_DIR1;
-					if (tab[p + lar] == 0)
-						kind += GAUCHE_DIR1;
-					if (tab[p - 1] == 0)
-						kind += HAUT_DIR1;
-				}
-				break;
-
-			case EST:
-				if (tab[position + lar] == 0)
-					kind += DROITE_DIR;
-				if (tab[position - lar] == 0)
-					kind += GAUCHE_DIR;
-				if (tab[position + 1] == 0) {
-					kind += HAUT_DIR;
-					int p = position + 1;
-					if (tab[p - lar] == 0)
-						kind += GAUCHE_DIR1;
-					if (tab[p + lar] == 0)
-						kind += DROITE_DIR1;
-					if (tab[p + 1] == 0)
-						kind += HAUT_DIR1;
-				}
-				break;
-		}
+		
 
 		this.rw.render(op, kind);
 		this.rd3.render(op);

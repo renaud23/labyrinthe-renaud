@@ -1,18 +1,31 @@
 package com.renaud.laby.player;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.view.IDrawOperation;
+import com.renaud.laby.view.SimpleImageLoader;
 
 public class RenderWall3D {
 	
-	private Color color_wall = Color.gray;
-	private Color color_wall_dark = Color.gray;
-	private Color color_ground = Color.yellow;
-	private Color color_stair = Color.lightGray;
 	
-	private final static int largeur_mur = 50;
-	private final static int hauteur_mur = 80;
+	private static BufferedImage image; 
 	
+	static{
+		SimpleImageLoader smp = new SimpleImageLoader();
+		try {
+			image = ImageIO.read(new File("C:/Users/Renaud/git/labyrinthe-renaud/laby/image/wall.jpg") );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};//smp.getImage("C:/Users/Renaud/git/labyrinthe-renaud/laby/image/wall.jpg");
+	}
 	
 	public class Point3D{
 		int x,y,z;
@@ -23,80 +36,149 @@ public class RenderWall3D {
 			this.z = z;
 		}
 	}
+
+	private final static int largeur_mur = 80;
+	private final static int longueur_mur = 50;
+	private final static int hauteur_mur = 140;
 	
-	private Point3D[] WALL_HAUT = {new Point3D(-largeur_mur/2,0,0),new Point3D(-largeur_mur/2,hauteur_mur,0),new Point3D(largeur_mur/2,hauteur_mur,0),new Point3D(largeur_mur/2,0,0)};
-	private Point3D[] WALL_GAUCHE = {new Point3D(-largeur_mur/2,0,0),new Point3D(-largeur_mur/2,hauteur_mur,0),new Point3D(-largeur_mur/2,hauteur_mur,largeur_mur),new Point3D(-largeur_mur/2,0,largeur_mur)};
-	private Point3D[] WALL_DROITE = {new Point3D(largeur_mur/2,0,0),new Point3D(largeur_mur/2,hauteur_mur,0),new Point3D(largeur_mur/2,hauteur_mur,largeur_mur),new Point3D(largeur_mur/2,0,largeur_mur)};
-	private Point3D[] GROUND = {new Point3D(-largeur_mur/2,0,0),new Point3D(-largeur_mur/2,0,largeur_mur),new Point3D(largeur_mur/2,0,largeur_mur),new Point3D(largeur_mur/2,0,0)};
+	private final static double limx = 150;
+	private final static double limy = 60;
 	
 	
 	private int sx = 250;
-	private int sy = 100;
+	private int sy = 150;
 
+	private Labyrinthe laby;
+	private Player player;
 	
-	public void render(IDrawOperation op,int code){
-		
-		boolean g = (code & Player.GAUCHE_DIR) == Player.GAUCHE_DIR;
-		boolean d = (code & Player.DROITE_DIR) == Player.DROITE_DIR;
-		boolean h = (code & Player.HAUT_DIR) == Player.HAUT_DIR;
-		boolean d1 = (code & Player.DROITE_DIR1) == Player.DROITE_DIR1;
-		boolean g1 = (code & Player.GAUCHE_DIR1) == Player.GAUCHE_DIR1;
-		boolean h1 = (code & Player.HAUT_DIR1) == Player.HAUT_DIR1;
-		
-		this.drawWAll(color_ground, op, GROUND, 0, 0, 0);
-		this.drawWAll(color_stair, op, GROUND, 0, 0, hauteur_mur);
-		if(h){
-			this.drawWAll(color_ground, op, GROUND, largeur_mur, 0, 0);
-			this.drawWAll(color_stair, op, GROUND, largeur_mur, 0, hauteur_mur);
-		}
-		if(g){
-			this.drawWAll(color_ground, op, GROUND, 0, -largeur_mur, 0);
-			this.drawWAll(color_stair, op, GROUND, 0, -largeur_mur, hauteur_mur);
-		}
-		if(d){
-			this.drawWAll(color_ground, op, GROUND, 0, largeur_mur, 0);
-			this.drawWAll(color_stair, op, GROUND, 0, largeur_mur, hauteur_mur);
-		}
-		if(d1){
-			this.drawWAll(color_ground, op, GROUND, largeur_mur, largeur_mur, 0);
-			this.drawWAll(color_stair, op, GROUND, largeur_mur, largeur_mur, hauteur_mur);
-		}
-		if(g1){
-			this.drawWAll(color_ground, op, GROUND, largeur_mur, -largeur_mur, 0);
-			this.drawWAll(color_stair, op, GROUND, largeur_mur, -largeur_mur, hauteur_mur);
-		}
-		
-		if(!h){
-			this.drawWAll(color_wall, op, WALL_HAUT, largeur_mur, 0, 0);
-			if(g) this.drawWAll(color_wall,op, WALL_HAUT, largeur_mur, -largeur_mur, 0);
-			if(d) this.drawWAll(color_wall,op, WALL_HAUT, largeur_mur, largeur_mur, 0);
-		}else{
-			if(!h1) this.drawWAll(color_wall_dark,op, WALL_HAUT, largeur_mur*2, 0, 0);
-			if(!g1) this.drawWAll(color_wall_dark,op, WALL_GAUCHE, largeur_mur, 0, 0); else this.drawWAll(color_wall_dark,op, WALL_HAUT, largeur_mur*2, -largeur_mur, 0);
-			if(!d1) this.drawWAll(color_wall_dark,op, WALL_DROITE, largeur_mur, 0, 0); else this.drawWAll(color_wall_dark,op, WALL_HAUT, largeur_mur*2, largeur_mur, 0);
-		}
-		
-		if(!g) {
-			if(h && g1) this.drawWAll(color_wall, op, WALL_HAUT, largeur_mur, -largeur_mur, 0);
-			this.drawWAll(color_wall,op, WALL_GAUCHE, 0, 0, 0);
-		}else if(!g1) this.drawWAll(color_wall, op, WALL_HAUT, largeur_mur, -largeur_mur, 0);
-		if(!d) {
-			if(h && d1)this.drawWAll(color_wall, op, WALL_HAUT, largeur_mur, largeur_mur, 0);
-			this.drawWAll(color_wall,op, WALL_DROITE, 0, 0, 0);
-		}else if(!d1) this.drawWAll(color_wall, op, WALL_HAUT, largeur_mur, largeur_mur, 0);
-		
+	private Point3D[] WALL_HAUT = {new Point3D(-largeur_mur/2,0,0),new Point3D(-largeur_mur/2,hauteur_mur,0),new Point3D(largeur_mur/2,hauteur_mur,0),new Point3D(largeur_mur/2,0,0)};
+	private Point3D[] WALL_GAUCHE = {new Point3D(-largeur_mur/2,0,0),new Point3D(-largeur_mur/2,hauteur_mur,0),new Point3D(-largeur_mur/2,hauteur_mur,longueur_mur),new Point3D(-largeur_mur/2,0,longueur_mur)};
+	private Point3D[] WALL_DROITE = {new Point3D(largeur_mur/2,0,0),new Point3D(largeur_mur/2,hauteur_mur,0),new Point3D(largeur_mur/2,hauteur_mur,longueur_mur),new Point3D(largeur_mur/2,0,longueur_mur)};
+	private Point3D[] GROUND = {new Point3D(-largeur_mur/2,0,0),new Point3D(-largeur_mur/2,0,longueur_mur),new Point3D(largeur_mur/2,0,longueur_mur),new Point3D(largeur_mur/2,0,0)};
+	
+	
+	
+	
+	
+	public RenderWall3D(Labyrinthe laby, Player player) {
+		this.laby = laby;
+		this.player = player;
+	}
 
+
+	public void render(IDrawOperation op) {
+		int dist = 5;
+		Color back_wall = Color.darkGray;
+		Color wall = Color.lightGray;
+		Color sol = Color.green;
+		for(int i=dist-1;i>=0;i--){
+			int pos = nextPos(i);
+			
+			if(pos != 0){
+				int kind = this.kind(pos, player.getDirectionRegard());
+				
+				boolean g = (kind & Player.GAUCHE_DIR) == Player.GAUCHE_DIR;
+				boolean d = (kind & Player.DROITE_DIR) == Player.DROITE_DIR;
+				boolean h = (kind & Player.HAUT_DIR) == Player.HAUT_DIR;
+			
+				this.drawWAll(sol, op, GROUND, 0, 0, longueur_mur * i);
+				this.drawWAll(Color.gray, op, GROUND, 0, hauteur_mur, longueur_mur * i);
+				
+				if(!h)this.drawWAll(back_wall, op, WALL_HAUT, 0, 0, longueur_mur * (i+1));
+				if(!d){
+					this.drawWAll(wall, op, WALL_DROITE, 0, 0, longueur_mur * i);
+					this.drawWAll(back_wall, op, WALL_HAUT, largeur_mur, 0, longueur_mur * i);
+				}else {
+					this.drawWAll(back_wall, op, WALL_HAUT, largeur_mur, 0, longueur_mur * (i+1));
+					this.drawWAll(Color.gray, op, GROUND, largeur_mur, hauteur_mur, longueur_mur * i);
+					this.drawWAll(sol, op, GROUND, largeur_mur, 0, longueur_mur * i);
+				}
+				if(!g) {
+					this.drawWAll(wall, op, WALL_GAUCHE, 0, 0, longueur_mur * i); 
+					this.drawWAll(back_wall, op, WALL_HAUT, -largeur_mur, 0, longueur_mur * i);
+				}else {
+					this.drawWAll(back_wall, op, WALL_HAUT, -largeur_mur, 0, longueur_mur * (i+1));
+					this.drawWAll(Color.gray, op, GROUND, -largeur_mur, hauteur_mur, longueur_mur * i);
+					this.drawWAll(sol, op, GROUND, -largeur_mur, 0, longueur_mur * i);
+				}
+			
+			}
+			
+		}
+
+	}
+	
+	private int nextPos(int i){
+		int pos = 0;
+		int h = player.getPosition()/laby.getLargeurTable();
+		int l = player.getPosition()%laby.getLargeurTable();
 		
+		switch (player.getDirectionRegard()) {
+			case Player.NORD: pos = ((h-i)>0)?player.getPosition()- this.laby.getLargeurTable()*i : 0; break;
+			case Player.SUD: pos = ((h+i)<(laby.getHauteurTable()-1))?player.getPosition()+this.laby.getLargeurTable()*i : 0; break;
+			case Player.EST: pos = ((l+i)<(laby.getLargeurTable()-1))?player.getPosition()+i : 0; break;
+			case Player.OUEST: pos = ((l-i)>0)?player.getPosition()-i : 0; break;
+		}
+		
+		return pos;
 	}
 	
 
-	protected void drawWAll(Color c,IDrawOperation op,Point3D[] wall,int dist,int dx,int dy){
+	
+	public int kind(int position,int directionRegard){
+		int kind = 0;
+		int[] tab = laby.getTable();
+		int lar = laby.getLargeurTable();
+
+		switch (directionRegard) {
+			case Player.SUD:
+				if (tab[position - 1] == 0)
+					kind += Player.DROITE_DIR;
+				if (tab[position + 1] == 0)
+					kind += Player.GAUCHE_DIR;
+				if (tab[position + lar] == 0) 
+					kind += Player.HAUT_DIR;
+				break;
+
+			case Player.NORD:
+				if (tab[position + 1] == 0)
+					kind += Player.DROITE_DIR;
+				if (tab[position - 1] == 0)
+					kind += Player.GAUCHE_DIR;
+				if (tab[position - lar] == 0)
+					kind += Player.HAUT_DIR;
+					
+				break;
+
+			case Player.OUEST:
+				if (tab[position - lar] == 0)
+					kind += Player.DROITE_DIR;
+				if (tab[position + lar] == 0)
+					kind += Player.GAUCHE_DIR;
+				if (tab[position - 1] == 0)
+					kind += Player.HAUT_DIR;
+					
+				break;
+
+			case Player.EST:
+				if (tab[position + lar] == 0)
+					kind += Player.DROITE_DIR;
+				if (tab[position - lar] == 0)
+					kind += Player.GAUCHE_DIR;
+				if (tab[position + 1] == 0) 
+					kind += Player.HAUT_DIR;
+					
+				break;
+		}
+		return kind;
+	}
+	
+	protected void drawWAll(Color c,IDrawOperation op,Point3D[] wall, int dx, int dy, int dz){
 		
 		Point3D a = new Point3D(0,0,0);
 		Point3D b = new Point3D(0,0,0);
 		int[] xs = new  int[4];
 		int[] ys = new  int[4];
-		
 		
 		for(int i=0;i<4;i++){
 			int j = (i == 3) ? 0 :i+1;
@@ -108,8 +190,8 @@ public class RenderWall3D {
 			b.y = wall[j].y + dy;
 			b.z = wall[j].z;
 
-			checkPoint(a, dist);
-			checkPoint(b, dist);
+			checkPoint(a, dz);
+			checkPoint(b, dz);
 			
 			xs[i] = sx+a.x;
 			ys[i] = sy-a.y;
@@ -117,23 +199,20 @@ public class RenderWall3D {
 		
 		op.fillPolygone(c, xs, ys, 1.0f);
 		op.drawPolygone(Color.black, xs, ys, 1.0f);
+//		op.drawPolygone( xs, ys, image);
 	}
-	
-	
+
 	private void checkPoint(Point3D p,int dist){
-		double limx = 120;
-		double limy = 40;
+		
 		double sx = 1.0;
 		double sy = 1.0;
 		
 		double z = Math.sqrt(p.z+ dist)*8;
-	
 		
 		double x = p.x * (1-1 / limx * z);
 		double y = (p.y-limy) / p.x * x + limy;
-
+	
 		p.x = (int) (x * sx);
 		p.y = (int) (y * sy);
 	}
-
 }

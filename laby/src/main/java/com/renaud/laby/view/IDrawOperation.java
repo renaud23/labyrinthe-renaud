@@ -3,6 +3,7 @@ package com.renaud.laby.view;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 public interface IDrawOperation {
 
@@ -14,7 +15,7 @@ public interface IDrawOperation {
 
 	public void drawImage(Image image, double x, double y, double xRotation, double yRotation, double theta, double scaleX, double scaleY, float alpha);
 
-	public void drawPart(Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2);
+	public void drawImage(Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2);
 
 	public void drawRect(Color color, int x, int y, int width, int height);
 
@@ -31,4 +32,6 @@ public interface IDrawOperation {
 	public void fillPolygone(Color color, int[] x, int[] y, float alpha);
 	
 	public void drawPolygone(Color color, int[] x, int[] y, float alpha);
+	
+	public void drawPolygone(int[] x, int[] y, BufferedImage img);
 }

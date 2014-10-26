@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -72,8 +73,8 @@ public class AWTImageBufferDecorator extends JPanel implements IDrawOperation {
 	}
 
 	@Override
-	public void drawPart(Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2) {
-		this.backBuffer.drawPart(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2);
+	public void drawImage(Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2) {
+		this.backBuffer.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2);
 	}
 
 	@Override
@@ -125,6 +126,12 @@ public class AWTImageBufferDecorator extends JPanel implements IDrawOperation {
 
 	@Override
 	public void drawPolygone(Color color, int[] x, int[] y, float alpha) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void drawPolygone(int[] x, int[] y, BufferedImage img) {
 		// TODO Auto-generated method stub
 		
 	}

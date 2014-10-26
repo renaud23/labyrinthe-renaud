@@ -6,15 +6,19 @@ import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.TexturePaint;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 
@@ -109,9 +113,12 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 
 	}
 
-	public void drawPart(Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2) {
-		// TODO Auto-generated method stub
+	public void drawImage(Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2) {
+		Graphics2D g = (Graphics2D) this.strategy.getDrawGraphics();
 
+		g.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+
+		g.dispose();
 	}
 
 	public void drawRect(Color color, int x, int y, int width, int height) {
@@ -208,8 +215,21 @@ public class CanvasHwdBuffer extends Canvas implements IDrawOperation {
 		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
 		gr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 		
+		
 		gr.setColor(color);
 		Shape s = new Polygon(x, y, x.length);
 		gr.draw(s);
+	}
+	
+	public void drawPolygone(int[] x, int[] y, BufferedImage img) {
+		Graphics2D gr = (Graphics2D) this.strategy.getDrawGraphics();
+//		gr.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+		
+		Rectangle r = new Rectangle(0, 0, 280, 280);
+		TexturePaint tx = new TexturePaint(img, r);
+		gr.setPaint(tx);
+		
+		Shape s = new Polygon(x, y, x.length);
+		gr.fill(s);
 	}
 }

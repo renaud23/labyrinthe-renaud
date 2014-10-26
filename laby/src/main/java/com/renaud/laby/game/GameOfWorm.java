@@ -2,10 +2,8 @@ package com.renaud.laby.game;
 
 import java.awt.Color;
 import java.util.List;
-
 import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.player.Player;
-import com.renaud.laby.player.RenderWall3D;
 import com.renaud.laby.view.DrawOperationAware;
 import com.renaud.laby.view.IDrawOperation;
 import com.renaud.laby.view.IDrawable;
