@@ -37,12 +37,11 @@ public class RenderWall3D {
 		}
 	}
 
-	private final static int largeur_mur = 80;
+	private final static int largeur_mur = 50;
 	private final static int longueur_mur = 50;
-	private final static int hauteur_mur = 140;
+	private final static int hauteur_mur = 50;
 	
-	private final static double limx = 150;
-	private final static double limy = 60;
+	
 	
 	
 	private int sx = 250;
@@ -105,7 +104,28 @@ public class RenderWall3D {
 			}
 			
 		}
-
+		
+		
+//		drawWAll(Color.green, op, GROUND, 0, 0, longueur_mur*3);
+//		drawWAll(Color.green, op, GROUND, 0, 0, longueur_mur*2);
+//		drawWAll(Color.green, op, GROUND, 0, 0, longueur_mur);
+//		drawWAll(Color.green, op, GROUND, 0, 0, 0);
+//		
+//		drawWAll(Color.red, op, WALL_GAUCHE, 0, 0, longueur_mur*3);
+//		drawWAll(Color.red, op, WALL_DROITE, 0, 0, longueur_mur*3);
+//		
+//		drawWAll(Color.red, op, WALL_GAUCHE, 0, 0, longueur_mur*2);
+//		drawWAll(Color.red, op, WALL_DROITE, 0, 0, longueur_mur*2);
+//		
+//		drawWAll(Color.red, op, WALL_GAUCHE, 0, 0, longueur_mur);
+//		drawWAll(Color.red, op, WALL_DROITE, 0, 0, longueur_mur);
+//		
+//		drawWAll(Color.red, op, WALL_GAUCHE, 0, 0, 0);
+//		drawWAll(Color.red, op, WALL_DROITE, 0, 0, 0);
+		
+		
+		
+		
 	}
 	
 	private int nextPos(int i){
@@ -185,13 +205,13 @@ public class RenderWall3D {
 
 			a.x = wall[i].x + dx;
 			a.y = wall[i].y + dy;
-			a.z = wall[i].z;
+			a.z = wall[i].z + dz;
 			b.x = wall[j].x + dx;
 			b.y = wall[j].y + dy;
-			b.z = wall[j].z;
+			b.z = wall[j].z + dz;
 
-			checkPoint(a, dz);
-			checkPoint(b, dz);
+			checkPoint(a);
+			checkPoint(b);
 			
 			xs[i] = sx+a.x;
 			ys[i] = sy-a.y;
@@ -202,17 +222,44 @@ public class RenderWall3D {
 //		op.drawPolygone( xs, ys, image);
 	}
 
-	private void checkPoint(Point3D p,int dist){
-		
-		double sx = 1.0;
-		double sy = 1.0;
-		
-		double z = Math.sqrt(p.z+ dist)*8;
-		
-		double x = p.x * (1-1 / limx * z);
-		double y = (p.y-limy) / p.x * x + limy;
 	
-		p.x = (int) (x * sx);
-		p.y = (int) (y * sy);
+	private final static double limz = 150;
+	private final static double limy = 60;
+
+	
+//	private void checkPoint(Point3D p,int dist){
+//		
+//		double sx = 1.0;
+//		double sy = 1.0;
+//		
+//		double z = Math.sqrt(p.z+ dist)*8;
+//		
+//		double x = p.x * (1-1 / limz * z);
+//		double y = (p.y-limy) / p.x * x + limy;
+//	
+//		p.x = (int) (x * sx);
+//		p.y = (int) (y * sy);
+//		
+//		
+//	}
+	
+	private void checkPoint(Point3D p){
+		double vx = 0;
+		double vy = 25;
+		double vz = 150;
+
+		double a = (p.y-vy) / (p.x-vx);
+		double b = p.y - a * p.x;
+		double z = Math.min(vz, p.z);//Math.sqrt(p.z)*8);
+		
+//		double var = z / vz;
+		double yy = z / vz;
+		double var = 1 - 1/(1+yy);
+		double d = var * (vx-p.x);
+		
+		p.x += (int)d;
+		p.y += (int)(a * p.x + b);
+		
+		
 	}
 }
