@@ -31,6 +31,9 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 	private Labyrinthe laby;
 	private int position = 0;
 	private int directionRegard;
+	
+	private int mousex;
+	private int mousey;
 
 	private Random r = new Random();
 
@@ -275,6 +278,12 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 
 	public int getDirectionRegard() {
 		return directionRegard;
+	}
+
+	@Override
+	public void mouseMoved(int x, int y) {
+		
+		
 	}
 
 }

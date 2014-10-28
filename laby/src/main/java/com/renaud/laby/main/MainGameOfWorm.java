@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.controller.LabyKeyListener;
+import com.renaud.laby.controller.LabyMouseListener;
 import com.renaud.laby.game.GameOfWorm;
 import com.renaud.laby.player.Player;
 import com.renaud.laby.view.Fenetre;
@@ -30,7 +31,8 @@ public class MainGameOfWorm {
 		f.addDrawable(gow);
 
 		f.getFrame().addKeyListener(new LabyKeyListener(gow));
-
+		f.getBuffer().addMouseMotionListener(new LabyMouseListener(gow));
+		
 		gow.start();
 
 	}

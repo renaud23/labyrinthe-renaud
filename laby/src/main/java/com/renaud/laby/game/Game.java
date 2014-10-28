@@ -17,6 +17,9 @@ public class Game implements IController {
 	protected boolean right;
 	protected boolean turnLeft;
 	protected boolean turnRight;
+	protected boolean mouseMoved;
+	protected int x;
+	protected int y;
 
 	private boolean start = false;
 
@@ -40,6 +43,8 @@ public class Game implements IController {
 						c.turnLeft();
 					if (turnRight)
 						c.turnRight();
+					if(mouseMoved)
+						c.mouseMoved(x, y);
 				}
 			}
 			locked = false;
@@ -49,6 +54,7 @@ public class Game implements IController {
 			this.left = false;
 			this.turnLeft = false;
 			this.turnRight = false;
+			this.mouseMoved = false;
 		}
 
 	}
@@ -106,6 +112,16 @@ public class Game implements IController {
 		if (!locked)
 			turnLeft = true;
 
+	}
+
+	@Override
+	public void mouseMoved(int x, int y) {
+		if (!locked){
+			mouseMoved = true;
+			this.x = x;
+			this.y = y;
+		}
+		
 	}
 
 }

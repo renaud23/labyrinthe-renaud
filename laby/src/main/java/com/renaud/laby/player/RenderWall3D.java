@@ -38,8 +38,8 @@ public class RenderWall3D {
 	}
 
 	private final static int largeur_mur = 50;
-	private final static int longueur_mur = 50;
-	private final static int hauteur_mur = 50;
+	private final static int longueur_mur = 100;
+	private final static int hauteur_mur = 100;
 	
 	
 	
@@ -244,22 +244,42 @@ public class RenderWall3D {
 //	}
 	
 	private void checkPoint(Point3D p){
-		double vx = 0;
-		double vy = 25;
-		double vz = 150;
+		
+		double cos = Math.cos(Math.PI/16); 
+		double sin = Math.sin(Math.PI/16); 
+		
+//		p.x = (int) (p.x * cos + p.y * sin);
+//		p.y = (int) (-p.x*sin+p.y*cos);
 
-		double a = (p.y-vy) / (p.x-vx);
-		double b = p.y - a * p.x;
+//		p.y = (int) (p.y*cos+p.z*sin);
+//		p.z = (int) (-p.y*sin+p.z*cos);
+		
+//		p.x = (int) (p.x*cos-p.z*sin);
+//		p.z = (int) (p.x*sin+p.z*cos);
+		
+		double vx = 0;
+		double vy = 50;
+		double vz = 550;
+		
+//		vy = (int) (vy*cos+vz*sin);
+//		vz = (int) (-vy*sin+vz*cos);
+
+//		double a = (p.y-vy) / (p.x-vx);
+		double a = (vy-p.y) / (vx-p.x);
+	
 		double z = Math.min(vz, p.z);//Math.sqrt(p.z)*8);
 		
-//		double var = z / vz;
-		double yy = z / vz;
-		double var = 1 - 1/(1+yy);
-		double d = var * (vx-p.x);
+
+		double var = z / vz;
+		double yy = 1 - 1/(1+var*1.5);
+		double d = yy * (vx-p.x);
 		
 		p.x += (int)d;
-		p.y += (int)(a * p.x + b);
+		p.y += (int)(a * d);
 		
-		
+//		double cos = Math.cos(Math.PI/8); 
+//		double sin = Math.sin(Math.PI/8); 
+//		p.x = (int) (p.x*cos+p.y*sin);
+//		p.y = (int) (-p.x*sin+p.y*cos);
 	}
 }

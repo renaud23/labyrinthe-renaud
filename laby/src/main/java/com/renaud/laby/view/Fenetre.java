@@ -12,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import com.renaud.laby.game.Game;
 
@@ -22,6 +23,11 @@ public class Fenetre extends Observable implements Iterable<IDrawable> {
 	private AWTImageBufferDecorator offscreen;
 
 	private CanvasHwdBuffer buffer;
+
+	public CanvasHwdBuffer getBuffer() {
+		return buffer;
+	}
+
 
 	private Game game;
 
@@ -140,6 +146,8 @@ public class Fenetre extends Observable implements Iterable<IDrawable> {
 	}
 
 
-
+	public JPanel getPanel(){
+		return this.offscreen;
+	}
 
 }

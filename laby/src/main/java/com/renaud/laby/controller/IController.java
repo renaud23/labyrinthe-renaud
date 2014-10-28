@@ -8,4 +8,6 @@ public interface IController {
 	
 	public void turnRight();
 	public void turnLeft();
+	
+	public void mouseMoved(int x,int y);
 }
