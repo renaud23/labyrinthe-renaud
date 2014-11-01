@@ -27,7 +27,10 @@ public class RenderWall3D {
 	private final static int hauteur_mur = 100;
 	
 		
-	
+	private double vx = 0;
+	private double vy = 50;
+	private double vz = 450;
+	private int profondeurVue = 5;
 	private int sx = 250;
 	private int sy = 110;
 
@@ -50,11 +53,11 @@ public class RenderWall3D {
 
 
 	public void render(IDrawOperation op) {
-		int dist = 5;
+		
 		Color back_wall = Color.darkGray;
 		Color wall = Color.lightGray;
 		Color sol = Color.green;
-		for(int i=dist-1;i>=0;i--){
+		for(int i=profondeurVue-1;i>=0;i--){
 			int pos = nextPos(i);
 			
 			if(pos != 0){
@@ -187,19 +190,13 @@ public class RenderWall3D {
 	}
 
 	
-	private final static double limz = 150;
-	private final static double limy = 60;
+
 
 	
 	
 	private void checkPoint(Point3D p){
 		
-		double cos = Math.cos(Math.PI/16); 
-		double sin = Math.sin(Math.PI/16); 
 		
-		double vx = 0;
-		double vy = 50;
-		double vz = 550;
 		
 		double a = (vy-p.y) / (vx-p.x);
 	

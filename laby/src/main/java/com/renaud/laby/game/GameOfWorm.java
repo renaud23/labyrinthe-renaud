@@ -2,12 +2,14 @@ package com.renaud.laby.game;
 
 import java.awt.Color;
 import java.util.List;
+
 import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.player.Player;
 import com.renaud.laby.view.DrawOperationAware;
 import com.renaud.laby.view.IDrawOperation;
 import com.renaud.laby.view.IDrawable;
 import com.renaud.laby.view.LabyDrawer;
+import com.renaud.laby.view.LabyPlayerDrawer;
 import com.renaud.laby.worm.Worm;
 
 public class GameOfWorm extends Game implements IActivate, IDrawable, DrawOperationAware {
@@ -28,7 +30,7 @@ public class GameOfWorm extends Game implements IActivate, IDrawable, DrawOperat
 		this.ws = ws;
 		this.l = l;
 
-		ldrw = new LabyDrawer(l, 200, 200);
+		ldrw = new LabyPlayerDrawer(p,l, 200, 200);
 
 		for (Worm w : ws) {
 			w.setxDraw(200);
@@ -95,7 +97,7 @@ public class GameOfWorm extends Game implements IActivate, IDrawable, DrawOperat
 		}
 		this.p.draw();
 
-		// le ver
+		// le ver sur la vue des joueurs
 		if (this.onFirst) {
 			this.op.fillCircle(Color.red, 50, 50, 40, 1.0f);
 			this.op.fillCircle(Color.blue, 235, 50, 30, 1.0f);

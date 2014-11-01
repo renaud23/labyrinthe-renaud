@@ -6,11 +6,14 @@ import com.renaud.laby.Labyrinthe;
 
 public class LabyDrawer implements IDrawable, DrawOperationAware {
 
-	private IDrawOperation drawOperation;
+	protected IDrawOperation drawOperation;
 
-	private Labyrinthe laby;
-	private int x;
-	private int y;
+	protected Labyrinthe laby;
+	protected int x;
+	protected int y;
+	
+	protected int dalleHauteur = 5;
+	protected int dalleLargeur = 5;
 
 	public LabyDrawer(Labyrinthe laby) {
 		this.laby = laby;
@@ -20,6 +23,14 @@ public class LabyDrawer implements IDrawable, DrawOperationAware {
 		this.laby = laby;
 		this.x = x;
 		this.y = y;
+	}
+	
+	public LabyDrawer(Labyrinthe laby, int x, int y,int dl,int dh) {
+		this.laby = laby;
+		this.x = x;
+		this.y = y;
+		this.dalleHauteur = dh;
+		this.dalleLargeur = dl;
 	}
 
 	@Override
@@ -37,15 +48,14 @@ public class LabyDrawer implements IDrawable, DrawOperationAware {
 	@Override
 	public void draw() {
 		int[] t = laby.getTable();
-		int h = 5;
-		int l = 5;
+		
 
 		for (int i = 0; i < laby.getHauteurTable(); i++) {
 			for (int j = 0; j < laby.getLargeurTable(); j++) {
 				if (t[laby.getLargeurTable() * i + j] == 1)
-					drawOperation.fillRect(Color.black, x + j * l, y + i * h, l, h, 1.0f);
+					drawOperation.fillRect(Color.black, x + j * dalleLargeur, y + i * dalleHauteur, dalleLargeur, dalleHauteur, 1.0f);
 				else
-					drawOperation.fillRect(Color.yellow, x + j * l, y + i * h, l, h, 1.0f);
+					drawOperation.fillRect(Color.yellow, x + j * dalleLargeur, y + i * dalleHauteur, dalleLargeur, dalleHauteur, 1.0f);
 			}
 		}
 

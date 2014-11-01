@@ -16,12 +16,12 @@ public class MainGameOfWorm {
 	public static void main(String[] args) {
 		Fenetre f = new Fenetre(400, 400);
 
-		Labyrinthe l = new Labyrinthe(3, 3);
+		Labyrinthe l = new Labyrinthe(15, 15);
 		l.genere();
 		Player p = new Player(l);
 
 		List<Worm> ws = new ArrayList<>();
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 3; i++) {
 			ws.add(new Worm(l, 5, 50));
 		}
 

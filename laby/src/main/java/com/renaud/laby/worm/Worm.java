@@ -30,7 +30,7 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 	public Worm(Labyrinthe laby) {
 		this.laby = laby;
 		this.init();
-		move = new ParcoursExhaustif(laby, this);
+		this.move = new ParcoursExhaustif(laby, this);
 	}
 
 	public Worm(Labyrinthe laby, int length, long speed) {
@@ -110,6 +110,11 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 
 	}
 
+	
+	public void reset(){
+		this.move = new ParcoursExhaustif(laby, this);
+	}
+	
 	@Override
 	public void setDrawOperation(IDrawOperation op) {
 		this.op = op;
@@ -150,4 +155,13 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 		this.yDraw = yDraw;
 	}
 
+	public IWormMouvement getMove() {
+		return move;
+	}
+
+	public int getLength() {
+		return length;
+	}
+
+	
 }
