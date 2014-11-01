@@ -3,9 +3,10 @@ package com.renaud.laby.player;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.view.IDrawOperation;
 
-public class RenderWall2 {
+public class RenderWallASCII extends RenderWall3D {
 	
 	/*
 	 * 
@@ -21,7 +22,11 @@ public class RenderWall2 {
 	private Map<Integer, String[]> maps = new HashMap<Integer, String[]>();
 	
 
-	public RenderWall2(){
+	public RenderWallASCII(Labyrinthe laby, Player player){
+		super(laby,player);
+		
+		
+		
 		maps.put(0,type_0000);
 		maps.put(1,type_0001);
 		maps.put(2,type_0002);
@@ -235,41 +240,26 @@ public class RenderWall2 {
 		"_______________"
 	};
 	
-	public void render(IDrawOperation op,int code){
-		String[] tab = maps.get(code);
 	
-		int y = 12;
-		if(tab != null){
-			for(int i=0;i<hauteur;i++){
-				//System.out.println(tab[i]);
-				op.drawChar(tab[i],20,y*(1+i));
-			}
+	
+	public void render(IDrawOperation op){
+		int first = kind(player.getPosition(),player.getDirectionRegard());
+		int second = kind(nextPos(1),player.getDirectionRegard()) * (int)Math.pow(2, 4);
+
+		if((first&Player.HAUT_DIR) != Player.HAUT_DIR){
+			this.print(op, maps.get(first));
 		}else{
-			op.drawChar("Missing "+code, 20, 100);
+			this.print(op, maps.get(first+second));
 		}
 	}
 	
-	
-	private static String[] tmp = {
-		"\\              ",
-		"#\\_____________",
-		"##|############",
-		"##|############",
-		"##|############",
-		"##|############",
-		"#/_____________",
-		"/______________"
-	};
-	
-	private static String[] tmp2 = {
-		"               ",
-		"__           __",
-		"##|\\_______/|##",
-		"##|#|     |#|##",
-		"##|#|_____|#|##",
-		"##|/_______\\|##",
-		"_______________",
-		"_______________"
-	};
+	private void print(IDrawOperation op,String[] tab){
+		int y = 12;
+		if(tab != null){
+			for(int i=0;i<hauteur;i++){
+				op.drawChar(tab[i],20,y*(1+i));
+			}
+		}
+	}
 	
 }
