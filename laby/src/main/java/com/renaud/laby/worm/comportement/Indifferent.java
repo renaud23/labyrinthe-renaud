@@ -1,7 +1,8 @@
-package com.renaud.laby.worm;
+package com.renaud.laby.worm.comportement;
 
 import com.renaud.laby.game.Chrono;
-import com.renaud.laby.worm.comportement.IComportement;
+import com.renaud.laby.worm.Worm;
+import com.renaud.laby.worm.WormBlockedException;
 
 public class Indifferent implements IComportement{
 	
@@ -18,7 +19,7 @@ public class Indifferent implements IComportement{
 	public void activate() {
 		if (ch.isEllapsed()) {
 			try {
-				dir = w.getMove().next();
+				dir = w.getMouvement().next();
 			}
 			catch (WormBlockedException e) {
 				dir = 0;

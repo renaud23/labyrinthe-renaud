@@ -1,4 +1,4 @@
-package com.renaud.laby.worm;
+package com.renaud.laby.worm.mouvement;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 import com.renaud.laby.Labyrinthe;
+import com.renaud.laby.worm.Worm;
+import com.renaud.laby.worm.WormBlockedException;
 
 public class MarcheAuHazardMemoire implements IWormMouvement {
 

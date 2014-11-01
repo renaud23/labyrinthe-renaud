@@ -1,10 +1,11 @@
-package com.renaud.laby.worm;
+package com.renaud.laby.worm.mouvement;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import com.renaud.laby.Labyrinthe;
+import com.renaud.laby.worm.Worm;
 
 public class MarcheAuHazard implements IWormMouvement{
 	

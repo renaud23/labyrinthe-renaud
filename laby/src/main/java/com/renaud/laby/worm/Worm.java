@@ -9,6 +9,10 @@ import com.renaud.laby.game.IActivate;
 import com.renaud.laby.view.DrawOperationAware;
 import com.renaud.laby.view.IDrawOperation;
 import com.renaud.laby.view.IDrawable;
+import com.renaud.laby.worm.comportement.IComportement;
+import com.renaud.laby.worm.comportement.Indifferent;
+import com.renaud.laby.worm.mouvement.IWormMouvement;
+import com.renaud.laby.worm.mouvement.ParcoursExhaustif;
 
 public class Worm implements IActivate, IDrawable, DrawOperationAware {
 
@@ -22,7 +26,9 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 	private int[] positions;
 	private int dir = -1;
 	private Chrono ch = new Chrono(50);
-	private IWormMouvement move;
+	
+	private IComportement comportement;
+	private IWormMouvement mouvement;
 
 	private int xDraw;
 	private int yDraw;
@@ -30,36 +36,41 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 	public Worm(Labyrinthe laby) {
 		this.laby = laby;
 		this.init();
-		this.move = new ParcoursExhaustif(laby, this);
+		
+		this.mouvement = new ParcoursExhaustif(laby, this);
+		this.comportement = new Indifferent(this);
 	}
 
 	public Worm(Labyrinthe laby, int length, long speed) {
 		this.laby = laby;
 		this.length = length;
-		this.move = new ParcoursExhaustif(laby, this);
+		this.mouvement = new ParcoursExhaustif(laby, this);
+		this.comportement = new Indifferent(this);
 		this.init();
 		this.ch = new Chrono(speed);
 	}
 
 	@Override
 	public void activate() {
-		if (ch.isEllapsed()) {
-			try {
-				dir = this.move.next();
-			}
-			catch (WormBlockedException e) {
-				dir = 0;
-				// blocked = true;
-				this.move = new ParcoursExhaustif(laby, this);
-			}
-
-			for (int i = length - 1; i > 0; i--) {
-				positions[i] = positions[i - 1];
-			}
-			if (dir != 0)
-				pas++;
-			positions[0] += dir;
-		}
+//		if (ch.isEllapsed()) {
+//			try {
+//				dir = this.mouvement.next();
+//			}
+//			catch (WormBlockedException e) {
+//				dir = 0;
+//				// blocked = true;
+//				this.mouvement = new ParcoursExhaustif(laby, this);
+//			}
+//
+//			for (int i = length - 1; i > 0; i--) {
+//				positions[i] = positions[i - 1];
+//			}
+//			if (dir != 0)
+//				pas++;
+//			positions[0] += dir;
+//		}
+		
+		this.comportement.activate();
 	}
 
 	private void init() {
@@ -112,7 +123,7 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 
 	
 	public void reset(){
-		this.move = new ParcoursExhaustif(laby, this);
+		this.mouvement = new ParcoursExhaustif(laby, this);
 	}
 	
 	@Override
@@ -155,12 +166,24 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 		this.yDraw = yDraw;
 	}
 
-	public IWormMouvement getMove() {
-		return move;
+	public IWormMouvement getMouvement() {
+		return mouvement;
 	}
 
 	public int getLength() {
 		return length;
+	}
+
+	public IComportement getComportement() {
+		return comportement;
+	}
+
+	public void setComportement(IComportement comportement) {
+		this.comportement = comportement;
+	}
+
+	public void setMouvement(IWormMouvement mouvement) {
+		this.mouvement = mouvement;
 	}
 
 	
