@@ -58,14 +58,14 @@ public class Suiveur implements IComportement{
 			int i = 1;
 			
 			int nextPos = LabyrintheTools.nextPos(l, or, w.getPositions()[0], i);
-			while(i<distance && nextPos != LabyrintheTools.BLOCKED){
-				System.out.print(nextPos+" ");
+			while(i<distance && nextPos != LabyrintheTools.BLOCKED && walls[nextPos]==0){
+				System.out.print("X");
 				
 				
 				i++;
 				nextPos = LabyrintheTools.nextPos(l, or, w.getPositions()[0], i);
 			}
-			System.out.println(" "+i);
+			System.out.println();
 		}
 		
 	}
