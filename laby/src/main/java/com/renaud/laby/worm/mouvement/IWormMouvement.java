@@ -4,4 +4,5 @@ import com.renaud.laby.worm.WormBlockedException;
 
 public interface IWormMouvement{
 	public int next() throws WormBlockedException;
+	public int getOrientation();
 }

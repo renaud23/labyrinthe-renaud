@@ -3,7 +3,9 @@ package com.renaud.laby.player;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.renaud.laby.Direction;
 import com.renaud.laby.Labyrinthe;
+import com.renaud.laby.LabyrintheTools;
 import com.renaud.laby.view.IDrawOperation;
 
 public class RenderWallASCII extends RenderWall3D {
@@ -16,7 +18,7 @@ public class RenderWallASCII extends RenderWall3D {
 	 * 
 	 */
 	
-	private static int largeur = 15;
+//	private static int largeur = 15;
 	private static int hauteur = 8;
 	
 	private Map<Integer, String[]> maps = new HashMap<Integer, String[]>();
@@ -244,9 +246,11 @@ public class RenderWallASCII extends RenderWall3D {
 	
 	public void render(IDrawOperation op){
 		int first = kind(player.getPosition(),player.getDirectionRegard());
-		int second = kind(nextPos(1),player.getDirectionRegard()) * (int)Math.pow(2, 4);
+		int second = kind(LabyrintheTools.nextPos(
+				laby, this.player.getDirectionRegard(), this.player.getPosition(), 1),
+				player.getDirectionRegard()) * (int)Math.pow(2, 4);
 
-		if((first&Player.HAUT_DIR) != Player.HAUT_DIR){
+		if((first&Direction.HAUT_DIR) != Direction.HAUT_DIR){
 			this.print(op, maps.get(first));
 		}else{
 			this.print(op, maps.get(first+second));

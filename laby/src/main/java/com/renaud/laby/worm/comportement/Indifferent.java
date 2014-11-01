@@ -8,11 +8,12 @@ public class Indifferent implements IComportement{
 	
 	private Worm w;
 	private int dir;
-	private Chrono ch = new Chrono(50); 
+	private Chrono ch; 
 
-	public Indifferent(Worm w) {
+	public Indifferent(Worm w,long speed) {
 		this.w = w;
 		this.dir = -1;
+		ch = new Chrono(speed);
 	}
 
 	@Override
@@ -23,15 +24,14 @@ public class Indifferent implements IComportement{
 			}
 			catch (WormBlockedException e) {
 				dir = 0;
-				// blocked = true;
 				this.w.reset();
 			}
 			int[] positions = w.getPositions();
 			for (int i = w.getLength() - 1; i > 0; i--) {
 				positions[i] = positions[i - 1];
 			}
-//			if (dir != 0)
-//				pas++;
+			if (dir != 0)
+				w.incrementPas();
 			positions[0] += dir;
 		}
 		

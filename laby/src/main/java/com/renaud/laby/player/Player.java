@@ -3,6 +3,7 @@ package com.renaud.laby.player;
 import java.awt.Color;
 import java.util.Random;
 
+import com.renaud.laby.Direction;
 import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.controller.IController;
 import com.renaud.laby.game.IActivate;
@@ -11,17 +12,6 @@ import com.renaud.laby.view.IDrawOperation;
 import com.renaud.laby.view.IDrawable;
 
 public class Player implements IController, IActivate, IDrawable, DrawOperationAware {
-
-	public static final int GAUCHE_DIR = 2;
-	public static final int DROITE_DIR = 1;
-	public static final int HAUT_DIR = 8;
-	public static final int BAS_DIR = 4;
-
-	public static final int NORD = 1;
-	public static final int SUD = 4;
-	public static final int EST = 8;
-	public static final int OUEST = 2;
-
 	private IDrawOperation op;
 
 	private RenderWallASCII renderASCII;
@@ -51,7 +41,7 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 			position = r.nextInt(t.length);
 		}
 
-		directionRegard = NORD;
+		directionRegard = Direction.NORD;
 
 		this.memory = new int[laby.getLargeurTable() * laby.getHauteurTable()];
 		this.memory[position] = VIDE;
@@ -69,20 +59,20 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 
 	@Override
 	public void up() {
-		this.move(HAUT_DIR);
+		this.move(Direction.HAUT_DIR);
 	}
 
 	@Override
 	public void left() {
 		// this.move(GAUCHE_DIR);
 		directionRegard = directionRegard << 1;
-		if (directionRegard > EST)
-			directionRegard = NORD;
+		if (directionRegard > Direction.EST)
+			directionRegard = Direction.NORD;
 	}
 
 	@Override
 	public void down() {
-		this.move(BAS_DIR);
+		this.move(Direction.BAS_DIR);
 	}
 
 	@Override
@@ -90,21 +80,21 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 		// this.move(DROITE_DIR);
 		directionRegard = directionRegard >> 1;
 		if (directionRegard == 0)
-			directionRegard = EST;
+			directionRegard = Direction.EST;
 	}
 
 	@Override
 	public void turnRight() {
 		directionRegard = directionRegard >> 1;
 		if (directionRegard == 0)
-			directionRegard = EST;
+			directionRegard = Direction.EST;
 	}
 
 	@Override
 	public void turnLeft() {
 		directionRegard = directionRegard << 1;
-		if (directionRegard > EST)
-			directionRegard = NORD;
+		if (directionRegard > Direction.EST)
+			directionRegard = Direction.NORD;
 	}
 
 	@Override
@@ -130,19 +120,19 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 		int haut = 0;
 		int left = 0;
 		switch (directionRegard) {
-			case NORD:
+			case Direction.NORD:
 				haut = -lar;
 				left = -1;
 				break;
-			case SUD:
+			case Direction.SUD:
 				haut = lar;
 				left = 1;
 				break;
-			case OUEST:
+			case Direction.OUEST:
 				haut = -1;
 				left = -lar;
 				break;
-			case EST:
+			case Direction.EST:
 				haut = 1;
 				left = lar;
 				break;
@@ -174,13 +164,13 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 		this.renderASCII.render(op);
 		this.render3D.render(op);
 
-		if (directionRegard == NORD)
+		if (directionRegard == Direction.NORD)
 			op.drawChar("NORD", 10, 150);
-		if (directionRegard == SUD)
+		if (directionRegard == Direction.SUD)
 			op.drawChar("SUD", 10, 150);
-		if (directionRegard == EST)
+		if (directionRegard == Direction.EST)
 			op.drawChar("EST", 10, 150);
-		if (directionRegard == OUEST)
+		if (directionRegard == Direction.OUEST)
 			op.drawChar("OUEST", 10, 150);
 		op.drawChar("Pos " + position, 10, 190);
 
@@ -208,47 +198,47 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 		int lar = laby.getLargeurTable();
 		int posInit = position;
 		switch (code) {
-			case GAUCHE_DIR:
-				if (directionRegard == NORD && tab[position - 1] == 0)
+			case Direction.GAUCHE_DIR:
+				if (directionRegard == Direction.NORD && tab[position - 1] == 0)
 					position -= 1;
-				if (directionRegard == SUD && tab[position + 1] == 0)
+				if (directionRegard == Direction.SUD && tab[position + 1] == 0)
 					position += 1;
-				if (directionRegard == EST && tab[position - lar] == 0)
+				if (directionRegard == Direction.EST && tab[position - lar] == 0)
 					position -= lar;
-				if (directionRegard == OUEST && tab[position + lar] == 0)
+				if (directionRegard == Direction.OUEST && tab[position + lar] == 0)
 					position += lar;
 				break;
 
-			case DROITE_DIR:
-				if (directionRegard == NORD && tab[position + 1] == 0)
+			case Direction.DROITE_DIR:
+				if (directionRegard == Direction.NORD && tab[position + 1] == 0)
 					position += 1;
-				if (directionRegard == SUD && tab[position - 1] == 0)
+				if (directionRegard == Direction.SUD && tab[position - 1] == 0)
 					position -= 1;
-				if (directionRegard == EST && tab[position + lar] == 0)
+				if (directionRegard == Direction.EST && tab[position + lar] == 0)
 					position += lar;
-				if (directionRegard == OUEST && tab[position - lar] == 0)
+				if (directionRegard == Direction.OUEST && tab[position - lar] == 0)
 					position -= lar;
 				break;
 
-			case HAUT_DIR:
-				if (directionRegard == NORD && tab[position - lar] == 0)
+			case Direction.HAUT_DIR:
+				if (directionRegard == Direction.NORD && tab[position - lar] == 0)
 					position -= lar;
-				if (directionRegard == SUD && tab[position + lar] == 0)
+				if (directionRegard == Direction.SUD && tab[position + lar] == 0)
 					position += lar;
-				if (directionRegard == EST && tab[position + 1] == 0)
+				if (directionRegard == Direction.EST && tab[position + 1] == 0)
 					position += 1;
-				if (directionRegard == OUEST && tab[position - 1] == 0)
+				if (directionRegard == Direction.OUEST && tab[position - 1] == 0)
 					position -= 1;
 				break;
 
-			case BAS_DIR:
-				if (directionRegard == NORD && tab[position + lar] == 0)
+			case Direction.BAS_DIR:
+				if (directionRegard == Direction.NORD && tab[position + lar] == 0)
 					position += lar;
-				if (directionRegard == SUD && tab[position - lar] == 0)
+				if (directionRegard == Direction.SUD && tab[position - lar] == 0)
 					position -= lar;
-				if (directionRegard == EST && tab[position - 1] == 0)
+				if (directionRegard == Direction.EST && tab[position - 1] == 0)
 					position -= 1;
-				if (directionRegard == OUEST && tab[position + 1] == 0)
+				if (directionRegard == Direction.OUEST && tab[position + 1] == 0)
 					position += 1;
 				break;
 		}

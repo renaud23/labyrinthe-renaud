@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.renaud.laby.Direction;
 import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.worm.Worm;
 
@@ -12,6 +13,8 @@ public class MarcheAuHazard implements IWormMouvement{
 	private Labyrinthe laby;
 	private Worm w;
 	private int dir;
+	
+	private int orientation;
 	
 
 	public MarcheAuHazard(Labyrinthe laby, Worm w) {
@@ -45,7 +48,22 @@ public class MarcheAuHazard implements IWormMouvement{
 		if(tmp.size()>0) dir = tmp.get(r.nextInt(tmp.size()));
 		else dir = 0;
 		
+		this.checkOrientation();
+		
 		return dir;
+	}
+
+	private void checkOrientation(){
+		if(dir == 1) orientation = Direction.EST;
+		else if(dir == -1) orientation = Direction.OUEST;
+		else if(dir == laby.getLargeurTable()) orientation = Direction.SUD;
+		else if(dir == -laby.getLargeurTable()) orientation = Direction.NORD;
+	}
+
+
+	@Override
+	public int getOrientation() {
+		return this.orientation;
 	}
 
 }

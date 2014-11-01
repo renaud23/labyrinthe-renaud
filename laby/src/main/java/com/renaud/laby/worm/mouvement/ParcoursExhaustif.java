@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
+import com.renaud.laby.Direction;
 import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.worm.Worm;
 import com.renaud.laby.worm.WormBlockedException;
@@ -16,6 +17,7 @@ public class ParcoursExhaustif extends MarcheAuHazardMemoire implements IWormMou
 	private boolean reverse = false;
 
 	private int dir;
+	private int orientation;
 	private Stack<Integer> dirs;
 
 	public ParcoursExhaustif(Labyrinthe laby, Worm w) {
@@ -29,8 +31,6 @@ public class ParcoursExhaustif extends MarcheAuHazardMemoire implements IWormMou
 	public int next() {
 		Random r = new Random();
 		this.look();
-//		this.print(System.out);
-//		System.out.println("#########################");
 
 		int l = w.getPositions()[0] % laby.getLargeurTable();
 		int h = w.getPositions()[0] / laby.getLargeurTable();
@@ -104,8 +104,23 @@ public class ParcoursExhaustif extends MarcheAuHazardMemoire implements IWormMou
 				if(find == 0) throw new WormBlockedException();
 			}
 		}
-
+		this.checkOrientation();
+		
 		return dir;
 	}
+	
+	
+	private void checkOrientation(){
+		if(dir == 1) orientation = Direction.EST;
+		else if(dir == -1) orientation = Direction.OUEST;
+		else if(dir == laby.getLargeurTable()) orientation = Direction.SUD;
+		else if(dir == -laby.getLargeurTable()) orientation = Direction.NORD;
+	}
+
+	public int getOrientation() {
+		return orientation;
+	}
+	
+	
 
 }

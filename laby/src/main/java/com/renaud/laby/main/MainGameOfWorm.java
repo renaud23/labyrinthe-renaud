@@ -10,6 +10,7 @@ import com.renaud.laby.game.GameOfWorm;
 import com.renaud.laby.player.Player;
 import com.renaud.laby.view.Fenetre;
 import com.renaud.laby.worm.Worm;
+import com.renaud.laby.worm.comportement.Suiveur;
 
 public class MainGameOfWorm {
 
@@ -21,9 +22,13 @@ public class MainGameOfWorm {
 		Player p = new Player(l);
 
 		List<Worm> ws = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
-			ws.add(new Worm(l, 5, 50));
+		for (int i = 0; i < 1; i++) {
+			Worm w = new Worm(l, 5, 50);
+			w.setComportement(new Suiveur(l, p, w, 500));
+			ws.add(w);
 		}
+		
+		
 
 		GameOfWorm gow = new GameOfWorm(p, ws, l);
 

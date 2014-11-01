@@ -1,7 +1,10 @@
 package com.renaud.laby.player;
 
 import java.awt.Color;
+
+import com.renaud.laby.Direction;
 import com.renaud.laby.Labyrinthe;
+import com.renaud.laby.LabyrintheTools;
 import com.renaud.laby.view.IDrawOperation;
 
 
@@ -58,14 +61,14 @@ public class RenderWall3D {
 		Color wall = Color.lightGray;
 		Color sol = Color.green;
 		for(int i=profondeurVue-1;i>=0;i--){
-			int pos = nextPos(i);
+			int pos = LabyrintheTools.nextPos(laby, this.player.getDirectionRegard(), this.player.getPosition(), i);//nextPos(i);
 			
 			if(pos != 0){
 				int kind = this.kind(pos, player.getDirectionRegard());
 				
-				boolean g = (kind & Player.GAUCHE_DIR) == Player.GAUCHE_DIR;
-				boolean d = (kind & Player.DROITE_DIR) == Player.DROITE_DIR;
-				boolean h = (kind & Player.HAUT_DIR) == Player.HAUT_DIR;
+				boolean g = (kind & Direction.GAUCHE_DIR) == Direction.GAUCHE_DIR;
+				boolean d = (kind & Direction.DROITE_DIR) == Direction.DROITE_DIR;
+				boolean h = (kind & Direction.HAUT_DIR) == Direction.HAUT_DIR;
 			
 				this.drawWAll(sol, op, GROUND, 0, 0, longueur_mur * i);
 				this.drawWAll(Color.gray, op, GROUND, 0, hauteur_mur, longueur_mur * i);
@@ -93,20 +96,20 @@ public class RenderWall3D {
 		}
 	}
 	
-	protected int nextPos(int i){
-		int pos = 0;
-		int h = player.getPosition()/laby.getLargeurTable();
-		int l = player.getPosition()%laby.getLargeurTable();
-		
-		switch (player.getDirectionRegard()) {
-			case Player.NORD: pos = ((h-i)>0)?player.getPosition()- this.laby.getLargeurTable()*i : -1; break;
-			case Player.SUD: pos = ((h+i)<(laby.getHauteurTable()-1))?player.getPosition()+this.laby.getLargeurTable()*i : -1; break;
-			case Player.EST: pos = ((l+i)<(laby.getLargeurTable()-1))?player.getPosition()+i : -1; break;
-			case Player.OUEST: pos = ((l-i)>0)?player.getPosition()-i : -1; break;
-		}
-		
-		return pos;
-	}
+//	protected int nextPos(int i){
+//		int pos = 0;
+//		int h = player.getPosition()/laby.getLargeurTable();
+//		int l = player.getPosition()%laby.getLargeurTable();
+//		
+//		switch (player.getDirectionRegard()) {
+//			case Direction.NORD: pos = ((h-i)>0)?player.getPosition()- this.laby.getLargeurTable()*i : -1; break;
+//			case Direction.SUD: pos = ((h+i)<(laby.getHauteurTable()-1))?player.getPosition()+this.laby.getLargeurTable()*i : -1; break;
+//			case Direction.EST: pos = ((l+i)<(laby.getLargeurTable()-1))?player.getPosition()+i : -1; break;
+//			case Direction.OUEST: pos = ((l-i)>0)?player.getPosition()-i : -1; break;
+//		}
+//		
+//		return pos;
+//	}
 	
 
 	
@@ -117,42 +120,42 @@ public class RenderWall3D {
 			int lar = laby.getLargeurTable();
 	
 			switch (directionRegard) {
-				case Player.SUD:
+				case Direction.SUD:
 					if (tab[position - 1] == 0)
-						kind += Player.DROITE_DIR;
+						kind += Direction.DROITE_DIR;
 					if (tab[position + 1] == 0)
-						kind += Player.GAUCHE_DIR;
+						kind += Direction.GAUCHE_DIR;
 					if (tab[position + lar] == 0) 
-						kind += Player.HAUT_DIR;
+						kind += Direction.HAUT_DIR;
 					break;
 	
-				case Player.NORD:
+				case Direction.NORD:
 					if (tab[position + 1] == 0)
-						kind += Player.DROITE_DIR;
+						kind += Direction.DROITE_DIR;
 					if (tab[position - 1] == 0)
-						kind += Player.GAUCHE_DIR;
+						kind += Direction.GAUCHE_DIR;
 					if (tab[position - lar] == 0)
-						kind += Player.HAUT_DIR;
+						kind += Direction.HAUT_DIR;
 						
 					break;
 	
-				case Player.OUEST:
+				case Direction.OUEST:
 					if (tab[position - lar] == 0)
-						kind += Player.DROITE_DIR;
+						kind += Direction.DROITE_DIR;
 					if (tab[position + lar] == 0)
-						kind += Player.GAUCHE_DIR;
+						kind += Direction.GAUCHE_DIR;
 					if (tab[position - 1] == 0)
-						kind += Player.HAUT_DIR;
+						kind += Direction.HAUT_DIR;
 						
 					break;
 	
-				case Player.EST:
+				case Direction.EST:
 					if (tab[position + lar] == 0)
-						kind += Player.DROITE_DIR;
+						kind += Direction.DROITE_DIR;
 					if (tab[position - lar] == 0)
-						kind += Player.GAUCHE_DIR;
+						kind += Direction.GAUCHE_DIR;
 					if (tab[position + 1] == 0) 
-						kind += Player.HAUT_DIR;
+						kind += Direction.HAUT_DIR;
 						
 					break;
 			}

@@ -2,9 +2,7 @@ package com.renaud.laby.worm;
 
 import java.awt.Color;
 import java.util.Random;
-
 import com.renaud.laby.Labyrinthe;
-import com.renaud.laby.game.Chrono;
 import com.renaud.laby.game.IActivate;
 import com.renaud.laby.view.DrawOperationAware;
 import com.renaud.laby.view.IDrawOperation;
@@ -24,8 +22,6 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 
 	private int length = 10;
 	private int[] positions;
-	private int dir = -1;
-	private Chrono ch = new Chrono(50);
 	
 	private IComportement comportement;
 	private IWormMouvement mouvement;
@@ -33,43 +29,20 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 	private int xDraw;
 	private int yDraw;
 
-	public Worm(Labyrinthe laby) {
-		this.laby = laby;
-		this.init();
-		
-		this.mouvement = new ParcoursExhaustif(laby, this);
-		this.comportement = new Indifferent(this);
-	}
+
 
 	public Worm(Labyrinthe laby, int length, long speed) {
 		this.laby = laby;
 		this.length = length;
 		this.mouvement = new ParcoursExhaustif(laby, this);
-		this.comportement = new Indifferent(this);
+		this.comportement = new Indifferent(this,speed);
 		this.init();
-		this.ch = new Chrono(speed);
 	}
+	
+
 
 	@Override
 	public void activate() {
-//		if (ch.isEllapsed()) {
-//			try {
-//				dir = this.mouvement.next();
-//			}
-//			catch (WormBlockedException e) {
-//				dir = 0;
-//				// blocked = true;
-//				this.mouvement = new ParcoursExhaustif(laby, this);
-//			}
-//
-//			for (int i = length - 1; i > 0; i--) {
-//				positions[i] = positions[i - 1];
-//			}
-//			if (dir != 0)
-//				pas++;
-//			positions[0] += dir;
-//		}
-		
 		this.comportement.activate();
 	}
 
@@ -186,5 +159,8 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 		this.mouvement = mouvement;
 	}
 
+	public void incrementPas(){
+		this.pas++;
+	}
 	
 }

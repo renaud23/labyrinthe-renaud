@@ -3,6 +3,7 @@ package com.renaud.laby.game;
 import java.awt.Color;
 import java.util.List;
 
+import com.renaud.laby.Direction;
 import com.renaud.laby.Labyrinthe;
 import com.renaud.laby.player.Player;
 import com.renaud.laby.view.DrawOperationAware;
@@ -58,17 +59,14 @@ public class GameOfWorm extends Game implements IActivate, IDrawable, DrawOperat
 					this.onFirst = true;
 				}
 				else {
-					if (dir == Player.SUD && pos == (pp + lar))
+				if (dir == Direction.SUD && pos == (pp + lar))
+					onSecond = true;
+				else if (dir == Direction.NORD && pos == (pp - lar))
+					onSecond = true;
+				else if (dir == Direction.EST && pos == (pp + 1))
 						onSecond = true;
-					else
-						if (dir == Player.NORD && pos == (pp - lar))
+				else if (dir == Direction.OUEST && pos == (pp - 1))
 							onSecond = true;
-						else
-							if (dir == Player.EST && pos == (pp + 1))
-								onSecond = true;
-							else
-								if (dir == Player.OUEST && pos == (pp - 1))
-									onSecond = true;
 				}
 			}
 		}// for w

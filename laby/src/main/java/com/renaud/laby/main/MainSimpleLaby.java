@@ -23,7 +23,7 @@ public class MainSimpleLaby {
 		f.addDrawable(new LabyDrawer(l));
 
 		for (int i = 0; i < 2; i++) {
-			Worm w = new Worm(l);
+			Worm w = new Worm(l,10,50);
 			g.addActivable(w);
 			f.addDrawable(w);
 		}
