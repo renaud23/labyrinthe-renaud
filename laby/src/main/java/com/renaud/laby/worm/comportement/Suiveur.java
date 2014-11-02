@@ -14,7 +14,7 @@ public class Suiveur implements IComportement{
 	private Worm w;
 	private int variation;
 	private Chrono ch; 
-	private int positionJoueur;
+	private int positionObservee;
 	private boolean poursuite;
 	
 	public Suiveur(Labyrinthe l,Player p,Worm w,long speed) {
@@ -28,21 +28,22 @@ public class Suiveur implements IComportement{
 	@Override
 	public void activate() {
 		if (ch.isEllapsed()) {
+			int[] positions = w.getPositions();
 			boolean look = this.search(this.w.getMouvement().getOrientation());
 			if(!look) look = this.search(LabyrintheTools.getRightDirection(this.w.getMouvement().getOrientation()));
 			if(!look) look = this.search(LabyrintheTools.getLeftDirection(this.w.getMouvement().getOrientation()));
 			if(!look && variation == 0) look = this.search(LabyrintheTools.getBackDirection(this.w.getMouvement().getOrientation()));
 			
 			if(look){
-				poursuite = true;
-				this.positionJoueur = p.getPosition();
+				this.poursuite = true;
+				this.positionObservee = p.getPosition();
 				this.w.reset();
 			}
 			if(poursuite){
-				if(w.getPositions()[0] == positionJoueur){
+				if(positions[0] == this.positionObservee){
 					poursuite = false;
 					variation = 0;
-				}else variation = LabyrintheTools.getVariation(w.getPositions()[0], positionJoueur, l.getLargeurTable());
+				}else variation = LabyrintheTools.getVariation(w.getPositions()[0], positionObservee, l.getLargeurTable());
 			}else{
 				try {
 					variation = w.getMouvement().next();
@@ -53,7 +54,7 @@ public class Suiveur implements IComportement{
 				}
 			}
 			
-			int[] positions = w.getPositions();
+			
 			for (int i = w.getLength() - 1; i > 0; i--) {
 				positions[i] = positions[i - 1];
 			}
