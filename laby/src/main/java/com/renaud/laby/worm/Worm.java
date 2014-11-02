@@ -17,6 +17,7 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 	private IDrawOperation op;
 	private int pas;
 	private boolean blocked = false;
+	private Color color = Color.red;
 
 	private Labyrinthe laby;
 
@@ -90,7 +91,7 @@ public class Worm implements IActivate, IDrawable, DrawOperationAware {
 
 		int l = this.positions[0] % laby.getLargeurTable();
 		int h = this.positions[0] / laby.getLargeurTable();
-		op.fillRect(Color.red, xDraw + 5 * l, yDraw + 5 * h, 5, 5, 1.0f);
+		op.fillRect(this.color, xDraw + 5 * l, yDraw + 5 * h, 5, 5, 1.0f);
 
 	}
 

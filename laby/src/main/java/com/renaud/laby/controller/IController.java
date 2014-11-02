@@ -6,6 +6,9 @@ public interface IController {
 	public void down();
 	public void right();
 	
+	public void shiftDown();
+	public void shiftUp();
+	
 	public void turnRight();
 	public void turnLeft();
 	

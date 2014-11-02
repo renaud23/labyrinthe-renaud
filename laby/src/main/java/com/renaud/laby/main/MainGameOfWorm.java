@@ -17,14 +17,14 @@ public class MainGameOfWorm {
 	public static void main(String[] args) {
 		Fenetre f = new Fenetre(400, 400);
 
-		Labyrinthe l = new Labyrinthe(5, 5);
+		Labyrinthe l = new Labyrinthe(15, 15);
 		l.genere();
 		Player p = new Player(l);
 
 		List<Worm> ws = new ArrayList<>();
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 3; i++) {
 			Worm w = new Worm(l, 5, 50);
-			w.setComportement(new Suiveur(l, p, w, 50));
+			w.setComportement(new Suiveur(l, p, w, 200));
 			ws.add(w);
 		}
 		

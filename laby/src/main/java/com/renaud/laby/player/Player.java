@@ -22,6 +22,7 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 	private int position = 0;
 	private int directionRegard;
 	
+	private boolean shiftDown;
 	private int mousex;
 	private int mousey;
 
@@ -64,10 +65,13 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 
 	@Override
 	public void left() {
-		// this.move(GAUCHE_DIR);
-		directionRegard = directionRegard << 1;
-		if (directionRegard > Direction.EST)
-			directionRegard = Direction.NORD;
+		if(shiftDown){
+			this.move(Direction.GAUCHE_DIR);
+		}else{
+			directionRegard = directionRegard << 1;
+			if (directionRegard > Direction.EST)
+				directionRegard = Direction.NORD;
+		}
 	}
 
 	@Override
@@ -77,10 +81,13 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 
 	@Override
 	public void right() {
-		// this.move(DROITE_DIR);
-		directionRegard = directionRegard >> 1;
-		if (directionRegard == 0)
-			directionRegard = Direction.EST;
+		if(shiftDown){
+			this.move(Direction.DROITE_DIR);
+		}else{
+			directionRegard = directionRegard >> 1;
+			if (directionRegard == 0)
+				directionRegard = Direction.EST;
+		}
 	}
 
 	@Override
@@ -272,6 +279,16 @@ public class Player implements IController, IActivate, IDrawable, DrawOperationA
 	public void mouseMoved(int x, int y) {
 		
 		
+	}
+
+	@Override
+	public void shiftDown() {
+		this.shiftDown = true;
+	}
+
+	@Override
+	public void shiftUp() {
+		this.shiftDown = false;
 	}
 
 }

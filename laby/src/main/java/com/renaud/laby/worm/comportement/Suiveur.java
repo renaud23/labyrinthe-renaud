@@ -14,6 +14,8 @@ public class Suiveur implements IComportement{
 	private Worm w;
 	private int variation;
 	private Chrono ch; 
+	private int positionJoueur;
+	private boolean find;
 	
 	public Suiveur(Labyrinthe l,Player p,Worm w,long speed) {
 		this.w = w;
@@ -26,8 +28,16 @@ public class Suiveur implements IComportement{
 	@Override
 	public void activate() {
 		if (ch.isEllapsed()) {
+			boolean look = this.search(this.w.getMouvement().getOrientation());
+			if(!look) look = this.search(LabyrintheTools.getRightDirection(this.w.getMouvement().getOrientation()));
+			if(!look) look = this.search(LabyrintheTools.getLeftDirection(this.w.getMouvement().getOrientation()));
 			
-			if(!this.search()){
+			if(look) find = true;
+			if(find){
+				variation = LabyrintheTools.getVariation(w.getPositions()[0], positionJoueur, l.getLargeurTable());
+				System.out.println(variation);
+				if(w.getPositions()[0] == positionJoueur) find = false;
+			}else{
 				try {
 					variation = w.getMouvement().next();
 				}
@@ -48,8 +58,8 @@ public class Suiveur implements IComportement{
 	}
 	
 	
-	private boolean search(){
-		int or = this.w.getMouvement().getOrientation();
+	private boolean search(int directionRegard){
+		int or = directionRegard;//this.w.getMouvement().getOrientation();
 		
 		boolean find = false;
 		if(or > 0){
@@ -71,11 +81,12 @@ public class Suiveur implements IComportement{
 		
 		if(this.w.getPositions()[0] == this.p.getPosition()) find = true;
 		if(find){
-			this.w.getMouvement().reset();
-			
-			if(this.w.getPositions()[0] == this.p.getPosition()) variation = 0;
-			else variation = LabyrintheTools.nextPos(l, or, w.getPositions()[0], 1)- w.getPositions()[0] ;
-			
+			this.positionJoueur = p.getPosition();
+//			this.w.getMouvement().reset();
+//			
+//			if(this.w.getPositions()[0] == this.p.getPosition()) variation = 0;
+//			else variation = LabyrintheTools.nextPos(l, or, w.getPositions()[0], 1)- w.getPositions()[0] ;
+//			
 		}
 		
 		return find;

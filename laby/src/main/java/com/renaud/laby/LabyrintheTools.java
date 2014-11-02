@@ -18,4 +18,60 @@ public class LabyrintheTools {
 		
 		return pos;
 	}
+	
+	
+	public static int getDirection(int position,int cible, int labyLargeur){
+		int dir = 0;
+		
+		int hp = (position / labyLargeur);
+		int hc = (cible / labyLargeur);
+		int lp = (position % labyLargeur);
+		int lc = (cible % labyLargeur);
+		
+		if(hp != hc){
+			if(hp>hc) dir += Direction.NORD;
+			else dir += Direction.SUD;
+		}
+		if(lp != lc){
+			if(lp>lc) dir += Direction.OUEST;
+			else dir += Direction.EST;
+		}
+		
+		return dir;
+	}
+	
+	
+	public static int getVariation(int position,int cible, int labyLargeur){
+		int variation = 0;
+		int hp = (position / labyLargeur);
+		int hc = (cible / labyLargeur);
+		int lp = (position % labyLargeur);
+		int lc = (cible % labyLargeur);
+		
+		if(hp != hc){
+			if(hp>hc) variation += -labyLargeur;
+			else variation += labyLargeur;
+		}
+		if(lp != lc){
+			if(lp>lc) variation += -1;
+			else variation += 1;
+		}
+		return variation;
+	}
+	
+	public static int getLeftDirection(int direction){
+		int d = direction;
+		d *= 2;
+		if(d > Direction.EST) d=Direction.NORD;
+		
+		return d;
+	}
+	
+	public static int getRightDirection(int direction){
+		int d = direction;
+		d /= 2;
+		if(d < Direction.NORD) d=Direction.EST;
+		
+		return d;
+	}
 }

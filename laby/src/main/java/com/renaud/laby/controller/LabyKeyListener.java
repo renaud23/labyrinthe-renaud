@@ -32,16 +32,20 @@ public class LabyKeyListener extends KeyAdapter{
 		}else if(c == KeyEvent.VK_RIGHT){
 			this.controllers.right();
 		}else if(c == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_LEFT){
-			this.controllers.turnLeft();
+			this.controllers.shiftDown();
 		}else if(c == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_RIGHT){
-			this.controllers.turnRight();
+			this.controllers.shiftDown();
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		super.keyReleased(e);
+		int c = e.getKeyCode();
+		if(c == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_LEFT){
+			this.controllers.shiftUp();
+		}else if(c == KeyEvent.VK_SHIFT && e.getKeyLocation() == KeyEvent.KEY_LOCATION_RIGHT){
+			this.controllers.shiftUp();
+		}
 	}
 
 }
