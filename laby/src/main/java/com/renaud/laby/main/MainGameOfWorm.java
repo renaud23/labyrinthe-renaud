@@ -17,7 +17,7 @@ public class MainGameOfWorm {
 	public static void main(String[] args) {
 		Fenetre f = new Fenetre(400, 400);
 
-		Labyrinthe l = new Labyrinthe(15, 15);
+		Labyrinthe l = new Labyrinthe(5, 5);
 		l.genere();
 		Player p = new Player(l);
 

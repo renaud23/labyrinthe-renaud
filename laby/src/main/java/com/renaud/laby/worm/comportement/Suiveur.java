@@ -12,13 +12,14 @@ public class Suiveur implements IComportement{
 	private Labyrinthe l;
 	private Player p;
 	private Worm w;
-	private int dir;
+	private int variation;
 	private Chrono ch; 
 	
 	public Suiveur(Labyrinthe l,Player p,Worm w,long speed) {
 		this.w = w;
-		this.dir = -1;
+		this.variation = -1;
 		this.l = l;
+		this.p = p;
 		ch = new Chrono(speed);
 	}
 
@@ -26,48 +27,58 @@ public class Suiveur implements IComportement{
 	public void activate() {
 		if (ch.isEllapsed()) {
 			
-			this.search();
-			
-			
-			try {
-				dir = w.getMouvement().next();
+			if(!this.search()){
+				try {
+					variation = w.getMouvement().next();
+				}
+				catch (WormBlockedException e) {
+					variation = 0;
+					this.w.reset();
+				}
 			}
-			catch (WormBlockedException e) {
-				dir = 0;
-				this.w.reset();
-			}
+			
 			int[] positions = w.getPositions();
 			for (int i = w.getLength() - 1; i > 0; i--) {
 				positions[i] = positions[i - 1];
 			}
-			if (dir != 0)
+			if (variation != 0)
 				w.incrementPas();
-			positions[0] += dir;
-		}
-		
+			positions[0] += variation;
+		}// if
 	}
 	
 	
-	private void search(){
+	private boolean search(){
 		int or = this.w.getMouvement().getOrientation();
-	
+		
+		boolean find = false;
 		if(or > 0){
 			int[] walls = l.getTable();
 			
 			int distance = 10;
 			int i = 1;
-			boolean find = false;
+			
 			int nextPos = LabyrintheTools.nextPos(l, or, w.getPositions()[0], i);
-			while(i<distance && nextPos != LabyrintheTools.BLOCKED && walls[nextPos]==0){
-				System.out.print("X");
-				
+			while(i<distance && nextPos != LabyrintheTools.BLOCKED && walls[nextPos]==0 && !find){
+				if(p.getPosition() == nextPos){
+					find = true;
+				}
 				
 				i++;
 				nextPos = LabyrintheTools.nextPos(l, or, w.getPositions()[0], i);
 			}
-			System.out.println();
 		}
 		
+		if(this.w.getPositions()[0] == this.p.getPosition()) find = true;
+		if(find){
+			this.w.getMouvement().reset();
+			
+			if(this.w.getPositions()[0] == this.p.getPosition()) variation = 0;
+			else variation = LabyrintheTools.nextPos(l, or, w.getPositions()[0], 1)- w.getPositions()[0] ;
+			
+		}
+		
+		return find;
 	}
 
 }
