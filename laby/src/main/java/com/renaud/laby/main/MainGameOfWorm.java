@@ -24,7 +24,7 @@ public class MainGameOfWorm {
 		List<Worm> ws = new ArrayList<>();
 		for (int i = 0; i < 1; i++) {
 			Worm w = new Worm(l, 5, 50);
-			w.setComportement(new Suiveur(l, p, w, 500));
+			w.setComportement(new Suiveur(l, p, w, 50));
 			ws.add(w);
 		}
 		

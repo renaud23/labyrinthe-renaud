@@ -17,7 +17,7 @@ public class MarcheAuHazardMemoire implements IWormMouvement {
 	protected int[] memory;
 	protected int dir;
 	
-	private int orientation;
+	protected int orientation;
 
 	public MarcheAuHazardMemoire(Labyrinthe laby, Worm w) {
 		this.laby = laby;
@@ -84,7 +84,7 @@ public class MarcheAuHazardMemoire implements IWormMouvement {
 
 	}
 	
-	private void checkOrientation(){
+	protected void checkOrientation(){
 		if(dir == 1) orientation = Direction.EST;
 		else if(dir == -1) orientation = Direction.OUEST;
 		else if(dir == laby.getLargeurTable()) orientation = Direction.SUD;
@@ -115,4 +115,8 @@ public class MarcheAuHazardMemoire implements IWormMouvement {
 		return this.orientation;
 	}
 
+	
+	public void reset(){
+		this.memory = new int[laby.getLargeurTable() * laby.getHauteurTable()];
+	}
 }

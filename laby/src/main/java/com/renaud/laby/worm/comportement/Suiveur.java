@@ -50,13 +50,13 @@ public class Suiveur implements IComportement{
 	
 	private void search(){
 		int or = this.w.getMouvement().getOrientation();
-		
+	
 		if(or > 0){
 			int[] walls = l.getTable();
 			
 			int distance = 10;
 			int i = 1;
-			
+			boolean find = false;
 			int nextPos = LabyrintheTools.nextPos(l, or, w.getPositions()[0], i);
 			while(i<distance && nextPos != LabyrintheTools.BLOCKED && walls[nextPos]==0){
 				System.out.print("X");

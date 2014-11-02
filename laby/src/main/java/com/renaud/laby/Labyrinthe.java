@@ -56,7 +56,7 @@ public class Labyrinthe {
 
 	public void genere() {
 		Random rnd = new Random();
-
+		this.creuse();
 		while (pile.size() > 1) {
 
 			List<Integer> cg = pile.remove(rnd.nextInt(pile.size()));
@@ -185,7 +185,7 @@ public class Labyrinthe {
 
 	public static void main(String[] args) {
 
-		Labyrinthe l = new Labyrinthe(3, 3);
+		Labyrinthe l = new Labyrinthe(6, 6);
 		l.genere();
 		l.printValue(System.out);
 		l.print(System.out);
@@ -241,4 +241,19 @@ public class Labyrinthe {
 		return size;
 	}
 
+	
+	private void creuse(){
+		
+//		for(int i=1;i<(hauteur-1);i++){
+//			for(int j=1;j<(largeur-1);j+=2){
+//				int n = j + i * largeur;
+//				data[n] -= MUR_EST;
+//				data[n+1] -= MUR_OUEST;
+//			}
+//		}
+//
+//		this.makeTable();
+//		this.printValue(System.out);
+//		this.print(System.out);
+	}
 }

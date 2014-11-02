@@ -16,8 +16,6 @@ public class ParcoursExhaustif extends MarcheAuHazardMemoire implements IWormMou
 	private Worm w;
 	private boolean reverse = false;
 
-	private int dir;
-	private int orientation;
 	private Stack<Integer> dirs;
 
 	public ParcoursExhaustif(Labyrinthe laby, Worm w) {
@@ -110,15 +108,9 @@ public class ParcoursExhaustif extends MarcheAuHazardMemoire implements IWormMou
 	}
 	
 	
-	private void checkOrientation(){
-		if(dir == 1) orientation = Direction.EST;
-		else if(dir == -1) orientation = Direction.OUEST;
-		else if(dir == laby.getLargeurTable()) orientation = Direction.SUD;
-		else if(dir == -laby.getLargeurTable()) orientation = Direction.NORD;
-	}
-
-	public int getOrientation() {
-		return orientation;
+	public void reset(){
+		super.reset();
+		this.dirs.clear();
 	}
 	
 	

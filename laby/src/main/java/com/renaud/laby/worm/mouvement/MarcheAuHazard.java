@@ -66,4 +66,12 @@ public class MarcheAuHazard implements IWormMouvement{
 		return this.orientation;
 	}
 
+
+
+	@Override
+	public void reset() {
+		// NOTHING
+		
+	}
+
 }
