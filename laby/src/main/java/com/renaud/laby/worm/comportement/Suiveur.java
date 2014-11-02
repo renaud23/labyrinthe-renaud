@@ -15,7 +15,7 @@ public class Suiveur implements IComportement{
 	private int variation;
 	private Chrono ch; 
 	private int positionJoueur;
-	private boolean find;
+	private boolean poursuite;
 	
 	public Suiveur(Labyrinthe l,Player p,Worm w,long speed) {
 		this.w = w;
@@ -31,12 +31,18 @@ public class Suiveur implements IComportement{
 			boolean look = this.search(this.w.getMouvement().getOrientation());
 			if(!look) look = this.search(LabyrintheTools.getRightDirection(this.w.getMouvement().getOrientation()));
 			if(!look) look = this.search(LabyrintheTools.getLeftDirection(this.w.getMouvement().getOrientation()));
+			if(!look && variation == 0) look = this.search(LabyrintheTools.getBackDirection(this.w.getMouvement().getOrientation()));
 			
-			if(look) find = true;
-			if(find){
-				variation = LabyrintheTools.getVariation(w.getPositions()[0], positionJoueur, l.getLargeurTable());
-				System.out.println(variation);
-				if(w.getPositions()[0] == positionJoueur) find = false;
+			if(look){
+				poursuite = true;
+				this.positionJoueur = p.getPosition();
+				this.w.reset();
+			}
+			if(poursuite){
+				if(w.getPositions()[0] == positionJoueur){
+					poursuite = false;
+					variation = 0;
+				}else variation = LabyrintheTools.getVariation(w.getPositions()[0], positionJoueur, l.getLargeurTable());
 			}else{
 				try {
 					variation = w.getMouvement().next();
@@ -59,37 +65,25 @@ public class Suiveur implements IComportement{
 	
 	
 	private boolean search(int directionRegard){
-		int or = directionRegard;//this.w.getMouvement().getOrientation();
-		
-		boolean find = false;
-		if(or > 0){
+		boolean vue = false;
+		if(this.w.getPositions()[0] == this.p.getPosition()) vue = true;
+		else if(directionRegard > 0){
 			int[] walls = l.getTable();
 			
 			int distance = 10;
 			int i = 1;
 			
-			int nextPos = LabyrintheTools.nextPos(l, or, w.getPositions()[0], i);
-			while(i<distance && nextPos != LabyrintheTools.BLOCKED && walls[nextPos]==0 && !find){
+			int nextPos = LabyrintheTools.nextPos(l, directionRegard, w.getPositions()[0], i);
+			while(i<distance && nextPos != LabyrintheTools.BLOCKED && walls[nextPos]==0 && !vue){
 				if(p.getPosition() == nextPos){
-					find = true;
+					vue = true;
 				}
 				
 				i++;
-				nextPos = LabyrintheTools.nextPos(l, or, w.getPositions()[0], i);
+				nextPos = LabyrintheTools.nextPos(l, directionRegard, w.getPositions()[0], i);
 			}
 		}
-		
-		if(this.w.getPositions()[0] == this.p.getPosition()) find = true;
-		if(find){
-			this.positionJoueur = p.getPosition();
-//			this.w.getMouvement().reset();
-//			
-//			if(this.w.getPositions()[0] == this.p.getPosition()) variation = 0;
-//			else variation = LabyrintheTools.nextPos(l, or, w.getPositions()[0], 1)- w.getPositions()[0] ;
-//			
-		}
-		
-		return find;
+		return vue;
 	}
 
 }

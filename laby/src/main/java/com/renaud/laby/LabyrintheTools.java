@@ -74,4 +74,10 @@ public class LabyrintheTools {
 		
 		return d;
 	}
+	
+	public static int getBackDirection(int direction){
+		int d = getRightDirection(direction);
+		
+		return getRightDirection(d);
+	}
 }

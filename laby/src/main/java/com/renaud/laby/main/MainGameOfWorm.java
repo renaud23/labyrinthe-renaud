@@ -22,7 +22,7 @@ public class MainGameOfWorm {
 		Player p = new Player(l);
 
 		List<Worm> ws = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 1; i++) {
 			Worm w = new Worm(l, 5, 50);
 			w.setComportement(new Suiveur(l, p, w, 200));
 			ws.add(w);
