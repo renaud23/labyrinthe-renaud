@@ -11,6 +11,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.renaud.solr.model.NullFieldStrategy;
 import com.renaud.solr.model.SolrField;
 import com.renaud.solr.model.SolrFields;
 import com.renaud.solr.service.SolrCreateService;
@@ -32,7 +33,7 @@ public abstract class SolrIndexer<U> implements SolrCreateService<U>{
 			Object value = null;
 			
 			SolrField a = f.getAnnotation(SolrField.class);
-			value = this.getSimpleValue(f,a,o);
+			value = this.getSolrFieldValue(f,a,o);
 			
 			
 			System.out.println(a.fieldName()+" "+value);
@@ -43,18 +44,33 @@ public abstract class SolrIndexer<U> implements SolrCreateService<U>{
 	}
 
 	
-	private Object getSimpleValue(Field f,SolrField a,Object o) throws SolrInseeException{
+	private Object getSolrFieldValue(Field f,SolrField a,Object o) throws SolrInseeException{
 		Object value = null;
-		if(a.multivalued()) value= this.getMultiValue(f,a,o);
-		else value = this.getSimpleValue();
+		if(!a.fieldStrategy().equals(NullFieldStrategy.class)) value = this.getStrategyValue(f,a,o);
+		else if(a.multivalued()) value = this.getMultiValue(f,a,o);
+		else value = this.getSimpleValue(f,a,o);
 		
 		return value;
 	}
 	
 	
 	
-	private Object getSimpleValue(){
-		return null;
+	
+	private Object getStrategyValue(Field f,SolrField a,Object o) throws SolrInseeException{
+		try {
+			return a.fieldStrategy().newInstance().getValue(f, a);
+		} catch (InstantiationException | IllegalAccessException | SolrInseeException e) {
+			throw new SolrInseeException("Impossible d'obtenir la valeur du field : "+a.fieldName(),e);
+		}
+	}
+	
+	private Object getSimpleValue(Field f,SolrField a,Object o) throws SolrInseeException{
+		String beanName = (a.beanName() != null && !a.beanName().isEmpty()) ? a.beanName() : f.getName();
+		try {
+			return PropertyUtils.getProperty(o, beanName);
+		} catch (IllegalAccessException | InvocationTargetException	| NoSuchMethodException e) {
+			throw new SolrInseeException("Impossible d'obtenir la valeur du field : "+a.fieldName(),e);
+		}
 	}
 	
 	

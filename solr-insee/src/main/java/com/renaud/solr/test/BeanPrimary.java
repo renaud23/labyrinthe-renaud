@@ -6,12 +6,13 @@ import java.util.Random;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.renaud.solr.model.JsonFieldStrategy;
 import com.renaud.solr.model.SolrField;
 
 public class BeanPrimary {
 	@SolrField(fieldName="id")
 	private Long id;
-	@SolrField(fieldName="name")
+	@SolrField(fieldName="name", fieldStrategy=JsonFieldStrategy.class)
 	private BeanJson name;
 	@SolrField(fieldName="links", beanName="liste.libelle", multivalued=true)
 	private List<BeanSecondary> liste = new ArrayList<>();
