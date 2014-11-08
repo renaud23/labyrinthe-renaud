@@ -4,7 +4,9 @@ package fr.insee.solr.service.impl;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.beanutils.NestedNullException;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -12,23 +14,34 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 import org.apache.commons.lang.StringUtils;
 
+import fr.insee.solr.connector.SolrConnector;
 import fr.insee.solr.model.NullFieldStrategy;
 import fr.insee.solr.model.SolrField;
 import fr.insee.solr.model.SolrFields;
 import fr.insee.solr.service.SolrCreateService;
 import fr.insee.solr.utils.ClassUtil;
 
-public abstract class SolrIndexer<U> implements SolrCreateService<U>{
+public class SolrIndexer<U> implements SolrCreateService<U>{
 	
-	protected abstract String getSolrUrl();
+//	protected abstract String getSolrUrl();
+//	
+//	protected abstract String getSolrCore();
 	
-	protected abstract String getSolrCore();
+	private SolrConnector connector;
+	
+	
+	
+
+	public SolrIndexer(SolrConnector connector) {
+		this.connector = connector;
+	}
+
 
 	public void index(U o) throws SolrInseeException {
 		Field[] simplefield = ClassUtil.getAnnotatedDeclaredFields(o.getClass(), SolrField.class, false);
 		Field[] arrayfield = ClassUtil.getAnnotatedDeclaredFields(o.getClass(),  SolrFields.class, false);		
 		
-		
+		Map<String, Object> fieldsValue = new HashMap<String, Object>();
 		
 		for(Field f : simplefield){
 			Object value = null;
@@ -36,8 +49,7 @@ public abstract class SolrIndexer<U> implements SolrCreateService<U>{
 			SolrField a = f.getAnnotation(SolrField.class);
 			value = this.getSolrFieldValue(f,a,o);
 			
-			
-			System.out.println(a.fieldName()+" "+value);
+			if(value != null) fieldsValue.put(a.fieldName(), value);
 		}
 		
 		for(Field f : arrayfield){
@@ -46,11 +58,12 @@ public abstract class SolrIndexer<U> implements SolrCreateService<U>{
 				Object value = null;
 				value = this.getSolrFieldValue(f,sf,o);
 				
-				System.out.println(sf.fieldName()+" "+value);
+				if(value != null) fieldsValue.put(sf.fieldName(), value);
 			}
 		}
 		
-		
+		System.out.println(fieldsValue);
+		this.connector.index(fieldsValue);
 	}
 
 	

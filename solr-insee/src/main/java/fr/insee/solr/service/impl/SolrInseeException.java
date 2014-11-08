@@ -2,10 +2,16 @@ package fr.insee.solr.service.impl;
 
 public class SolrInseeException extends Exception{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4685224860694688483L;
+
 	public SolrInseeException() {
 		super();
 	}
 
+	
 	public SolrInseeException(String message, Throwable cause,
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
