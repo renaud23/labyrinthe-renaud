@@ -1,5 +1,5 @@
 package fr.insee.solr.service;
 
-public interface SolrRepository<U> extends SolrCreateService<U>{
+public interface SolrRepository<U> extends SolrCreateService<U>, SolrReadService<U>{
 
 }

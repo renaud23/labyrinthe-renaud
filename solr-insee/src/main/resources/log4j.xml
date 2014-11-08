@@ -14,7 +14,12 @@
         <level value="DEBUG"/>
        <!--  <appender-ref ref="appenderOwliance_T"/>  -->               
     </logger>
-    <logger name="org.codehaus" additivity="false" >
+    <logger name="org.codehaus.*" additivity="false" >
+        <level value="DEBUG"/>
+       <!--  <appender-ref ref="appenderOwliance_T"/>  -->               
+    </logger>
+    
+     <logger name="fr.insee.*" additivity="false" >
         <level value="DEBUG"/>
        <!--  <appender-ref ref="appenderOwliance_T"/>  -->               
     </logger>

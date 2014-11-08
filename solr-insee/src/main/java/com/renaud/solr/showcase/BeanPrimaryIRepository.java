@@ -1,7 +1,6 @@
 package com.renaud.solr.showcase;
 
 
-
 import fr.insee.solr.connector.SolrJConnector;
 
 
@@ -17,6 +16,8 @@ public class BeanPrimaryIRepository extends SolrJConnector<BeanPrimary>{
 	public String getSolrCore() {
 		return "collection1";
 	}
+
+	
 
 
 
