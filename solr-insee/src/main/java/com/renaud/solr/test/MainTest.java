@@ -1,5 +1,6 @@
 package com.renaud.solr.test;
 
+import com.renaud.solr.service.impl.SolrInseeException;
 import com.renaud.solr.test.BeanPrimary.BeanBuilder;
 
 public class MainTest {
@@ -9,7 +10,12 @@ public class MainTest {
 		
 		BeanPrimaryIndexer indexer = new BeanPrimaryIndexer();
 		
-		indexer.index(b);
+		try {
+			indexer.index(b);
+		} catch (SolrInseeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

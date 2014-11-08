@@ -4,10 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
+import com.renaud.solr.model.SolrField;
+
 public class BeanPrimary {
+	@SolrField(fieldName="id")
 	private Long id;
-	private String name;
-	private List<BeanSecondary> liste = new ArrayList<BeanSecondary>();
+	@SolrField(fieldName="name")
+	private BeanJson name;
+	@SolrField(fieldName="links", beanName="liste.libelle", multivalued=true)
+	private List<BeanSecondary> liste = new ArrayList<>();
+	@SolrField(fieldName="features", multivalued=true)
+	private List<String> features = new ArrayList<>();
 	
 	
 	public Long getId() {
@@ -16,10 +25,11 @@ public class BeanPrimary {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getName() {
+	
+	public BeanJson getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(BeanJson name) {
 		this.name = name;
 	}
 	public List<BeanSecondary> getListe() {
@@ -30,16 +40,27 @@ public class BeanPrimary {
 	}
 	
 	
-	
+	public List<String> getFeatures() {
+		return features;
+	}
+	public void setFeatures(List<String> features) {
+		this.features = features;
+	}
+	public String toString(){
+		return ToStringBuilder.reflectionToString(this);
+	}
 	
 	public static class BeanBuilder{
 		public static BeanPrimary prepareBeanTest(){
 			BeanPrimary bt = new BeanPrimary();
 			bt.setId((long) new Random().nextInt(100000));
-			bt.setName("bean d'essai avec des car@ctères spéciaux !");
+			bt.setName(new BeanJson("mon bean en example", (long) new Random().nextInt(100000)));
 			bt.getListe().add(new BeanSecondary("sous-bean 1 "));
 			bt.getListe().add(new BeanSecondary("sous-bean 2 "));
-			bt.getListe().add(new BeanSecondary("sous-bean 2 "));
+			bt.getListe().add(new BeanSecondary("sous-bean 3 "));
+			bt.getFeatures().add("features 1");
+			bt.getFeatures().add("features 2");
+			bt.getFeatures().add("features 3");
 			
 			return bt;
 		}

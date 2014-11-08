@@ -11,4 +11,5 @@ public @interface SolrField {
 	String fieldName();
 	String beanName() default "";
 	boolean multivalued() default false;
+	Class<? extends FieldStrategy> fieldStrategy() default NullFieldStrategy.class;
 }
