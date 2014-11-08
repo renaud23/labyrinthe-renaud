@@ -33,6 +33,8 @@ public class RenderWall3D {
 	private double vx = 0;
 	private double vy = 50;
 	private double vz = 450;
+	private Point3D pointFuite = new Point3D(0, 50, 450);
+	
 	private int profondeurVue = 5;
 	private int sx = 250;
 	private int sy = 110;
@@ -198,17 +200,47 @@ public class RenderWall3D {
 	
 	
 	private void checkPoint(Point3D p){
+//		double cos = Math.cos(Math.PI/8);
+//		double sin = Math.sin(Math.PI/8);
+//		Point3D p2 = new Point3D(0,0,0);
+		
+		// sur l'axe z
+//		p2.x = (int) (p.x*cos+p.y*sin);
+//		p2.y = (int) (-p.x*sin+p.y*cos);
+//		p2.z = p.z;
+//		vx = (int) (pointFuite.x*cos+pointFuite.y*sin);
+//		vy = (int) (-pointFuite.x*sin+pointFuite.y*cos);
+//		vz = (int) (pointFuite.z);
+		
+//		p2.x = (int) (p.x*cos-p.z*sin);
+//		p2.y = (int) (p.y);
+//		p2.z = (int) (-p.x*sin+p.z*cos);
+		
+//		p2.x = (int) (p.x);
+//		p2.y = (int) (p.y*cos-p.z*sin);
+//		p2.z = (int) (p.y*sin+p.z*cos);
+//		vx = (int) (pointFuite.x);
+//		vy = (int) (pointFuite.y*cos-pointFuite.z*sin);
+//		vz = (int) (pointFuite.y*sin+pointFuite.z*cos);
 		
 		
-		
+//		double a = (vy-p2.y) / (vx-p2.x);
+//		double z = Math.min(vz, p2.z);
+//		
+//		double var = z / vz;
+//		double yy = 1 - 1/(1+var*1.5);
+//		double d = yy * (vx-p2.x);
+				
 		double a = (vy-p.y) / (vx-p.x);
-	
 		double z = Math.min(vz, p.z);
 		
-
 		double var = z / vz;
 		double yy = 1 - 1/(1+var*1.5);
 		double d = yy * (vx-p.x);
+		
+//		p.x = p2.x;
+//		p.y = p2.y;
+//		p.z = p2.z;
 		
 		p.x += (int)d;
 		p.y += (int)(a * d);
