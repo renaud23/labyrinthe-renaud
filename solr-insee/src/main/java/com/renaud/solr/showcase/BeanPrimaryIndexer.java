@@ -1,6 +1,6 @@
 package com.renaud.solr.showcase;
 
-import com.renaud.solr.service.impl.SolrIndexer;
+import fr.insee.solr.service.impl.SolrIndexer;
 
 public class BeanPrimaryIndexer extends SolrIndexer<BeanPrimary>{
 

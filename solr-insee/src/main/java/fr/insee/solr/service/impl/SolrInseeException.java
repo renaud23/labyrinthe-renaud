@@ -1,4 +1,4 @@
-package com.renaud.solr.service.impl;
+package fr.insee.solr.service.impl;
 
 public class SolrInseeException extends Exception{
 

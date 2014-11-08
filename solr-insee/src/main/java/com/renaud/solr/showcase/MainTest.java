@@ -1,7 +1,8 @@
 package com.renaud.solr.showcase;
 
-import com.renaud.solr.service.impl.SolrInseeException;
 import com.renaud.solr.showcase.BeanPrimary.BeanBuilder;
+
+import fr.insee.solr.service.impl.SolrInseeException;
 
 public class MainTest {
 
@@ -13,8 +14,7 @@ public class MainTest {
 		try {
 			indexer.index(b);
 		} catch (SolrInseeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 	}

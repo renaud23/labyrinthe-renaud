@@ -1,4 +1,4 @@
-package com.renaud.solr.service.impl;
+package fr.insee.solr.service.impl;
 
 
 import java.lang.reflect.Field;
@@ -6,16 +6,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.NestedNullException;
 import org.apache.commons.beanutils.PropertyUtils;
 
 
 import org.apache.commons.lang.StringUtils;
 
-import com.renaud.solr.model.NullFieldStrategy;
-import com.renaud.solr.model.SolrField;
-import com.renaud.solr.model.SolrFields;
-import com.renaud.solr.service.SolrCreateService;
-import com.renaud.solr.utils.ClassUtil;
+import fr.insee.solr.model.NullFieldStrategy;
+import fr.insee.solr.model.SolrField;
+import fr.insee.solr.model.SolrFields;
+import fr.insee.solr.service.SolrCreateService;
+import fr.insee.solr.utils.ClassUtil;
 
 public abstract class SolrIndexer<U> implements SolrCreateService<U>{
 	
@@ -37,7 +38,16 @@ public abstract class SolrIndexer<U> implements SolrCreateService<U>{
 			
 			
 			System.out.println(a.fieldName()+" "+value);
-			
+		}
+		
+		for(Field f : arrayfield){
+			SolrFields a = f.getAnnotation(SolrFields.class);
+			for(SolrField sf : a.fields()){
+				Object value = null;
+				value = this.getSolrFieldValue(f,sf,o);
+				
+				System.out.println(sf.fieldName()+" "+value);
+			}
 		}
 		
 		
@@ -68,7 +78,7 @@ public abstract class SolrIndexer<U> implements SolrCreateService<U>{
 		String beanName = (a.beanName() != null && !a.beanName().isEmpty()) ? a.beanName() : f.getName();
 		try {
 			return PropertyUtils.getProperty(o, beanName);
-		} catch (IllegalAccessException | InvocationTargetException	| NoSuchMethodException e) {
+		} catch (IllegalAccessException | InvocationTargetException	| NoSuchMethodException | NestedNullException e) {
 			throw new SolrInseeException("Impossible d'obtenir la valeur du field : "+a.fieldName(),e);
 		}
 	}

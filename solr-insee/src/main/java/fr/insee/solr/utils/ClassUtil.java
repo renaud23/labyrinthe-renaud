@@ -1,4 +1,4 @@
-package com.renaud.solr.utils;
+package fr.insee.solr.utils;
 //package com.kupal.skypeCommand.util;
 
 import java.lang.reflect.Field;

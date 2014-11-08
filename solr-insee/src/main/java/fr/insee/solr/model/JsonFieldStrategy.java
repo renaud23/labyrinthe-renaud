@@ -1,4 +1,4 @@
-package com.renaud.solr.model;
+package fr.insee.solr.model;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.renaud.solr.service.impl.SolrInseeException;
+import fr.insee.solr.service.impl.SolrInseeException;
 
 public class JsonFieldStrategy implements FieldStrategy{
 

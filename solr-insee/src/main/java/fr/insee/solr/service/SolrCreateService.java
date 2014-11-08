@@ -1,6 +1,6 @@
-package com.renaud.solr.service;
+package fr.insee.solr.service;
 
-import com.renaud.solr.service.impl.SolrInseeException;
+import fr.insee.solr.service.impl.SolrInseeException;
 
 public interface SolrCreateService<U> {
 	public void index(U o) throws SolrInseeException ;

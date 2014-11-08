@@ -6,8 +6,9 @@ import java.util.Random;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.renaud.solr.model.JsonFieldStrategy;
-import com.renaud.solr.model.SolrField;
+import fr.insee.solr.model.JsonFieldStrategy;
+import fr.insee.solr.model.SolrField;
+import fr.insee.solr.model.SolrFields;
 
 public class BeanPrimary {
 	@SolrField(fieldName="id")
@@ -18,6 +19,11 @@ public class BeanPrimary {
 	private List<BeanSecondary> liste = new ArrayList<>();
 	@SolrField(fieldName="features", multivalued=true)
 	private List<String> features = new ArrayList<>();
+	@SolrFields(fields = {
+		@SolrField(fieldName="categorie", beanName="nested.categorie"),
+		@SolrField(fieldName="author", beanName="nested.author", fieldStrategy=JsonFieldStrategy.class)
+	})
+	private BeanNested nested;
 	
 	
 	public Long getId() {
@@ -26,7 +32,6 @@ public class BeanPrimary {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
 	public BeanJson getName() {
 		return name;
 	}
@@ -39,14 +44,20 @@ public class BeanPrimary {
 	public void setListe(List<BeanSecondary> liste) {
 		this.liste = liste;
 	}
-	
-	
 	public List<String> getFeatures() {
 		return features;
 	}
 	public void setFeatures(List<String> features) {
 		this.features = features;
 	}
+	public BeanNested getNested() {
+		return nested;
+	}
+	public void setNested(BeanNested nested) {
+		this.nested = nested;
+	}
+	
+	
 	public String toString(){
 		return ToStringBuilder.reflectionToString(this);
 	}
@@ -62,6 +73,7 @@ public class BeanPrimary {
 			bt.getFeatures().add("features 1");
 			bt.getFeatures().add("features 2");
 			bt.getFeatures().add("features 3");
+			bt.setNested(new BeanNested("une catégorie", new BeanSecondary("un bean imbriqué")));
 			
 			return bt;
 		}

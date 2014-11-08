@@ -1,8 +1,8 @@
-package com.renaud.solr.model;
+package fr.insee.solr.model;
 
 import java.lang.reflect.Field;
 
-import com.renaud.solr.service.impl.SolrInseeException;
+import fr.insee.solr.service.impl.SolrInseeException;
 
 public class NullFieldStrategy implements FieldStrategy{
 
