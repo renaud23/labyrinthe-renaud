@@ -52,8 +52,6 @@ public class SolrIndexer<U> implements SolrCreateService<U>{
 				if(value != null) fieldsValue.put(sf.fieldName(), value);
 			}
 		}
-		
-		System.out.println(fieldsValue);
 	}
 
 	
