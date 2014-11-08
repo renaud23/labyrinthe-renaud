@@ -1,4 +1,4 @@
-package com.renaud.solr.test;
+package com.renaud.solr.showcase;
 
 import com.renaud.solr.service.impl.SolrIndexer;
 

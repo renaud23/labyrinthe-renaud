@@ -1,4 +1,4 @@
-package com.renaud.solr.test;
+package com.renaud.solr.showcase;
 
 import java.util.ArrayList;
 import java.util.List;

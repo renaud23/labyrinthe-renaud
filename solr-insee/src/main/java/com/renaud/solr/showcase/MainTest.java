@@ -1,7 +1,7 @@
-package com.renaud.solr.test;
+package com.renaud.solr.showcase;
 
 import com.renaud.solr.service.impl.SolrInseeException;
-import com.renaud.solr.test.BeanPrimary.BeanBuilder;
+import com.renaud.solr.showcase.BeanPrimary.BeanBuilder;
 
 public class MainTest {
 

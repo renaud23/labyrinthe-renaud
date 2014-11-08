@@ -58,7 +58,7 @@ public abstract class SolrIndexer<U> implements SolrCreateService<U>{
 	
 	private Object getStrategyValue(Field f,SolrField a,Object o) throws SolrInseeException{
 		try {
-			return a.fieldStrategy().newInstance().getValue(f, a);
+			return a.fieldStrategy().newInstance().getValue(f, a, o);
 		} catch (InstantiationException | IllegalAccessException | SolrInseeException e) {
 			throw new SolrInseeException("Impossible d'obtenir la valeur du field : "+a.fieldName(),e);
 		}
