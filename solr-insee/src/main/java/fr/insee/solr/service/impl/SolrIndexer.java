@@ -13,8 +13,6 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 
 import org.apache.commons.lang.StringUtils;
-
-import fr.insee.solr.connector.SolrConnector;
 import fr.insee.solr.model.NullFieldStrategy;
 import fr.insee.solr.model.SolrField;
 import fr.insee.solr.model.SolrFields;
@@ -22,26 +20,19 @@ import fr.insee.solr.service.SolrCreateService;
 import fr.insee.solr.utils.ClassUtil;
 
 public class SolrIndexer<U> implements SolrCreateService<U>{
+
 	
-//	protected abstract String getSolrUrl();
-//	
-//	protected abstract String getSolrCore();
-	
-	private SolrConnector connector;
-	
-	
+	private Map<String, Object> fieldsValue = new HashMap<String, Object>();
 	
 
-	public SolrIndexer(SolrConnector connector) {
-		this.connector = connector;
+	public SolrIndexer() {
+		
 	}
 
 
 	public void index(U o) throws SolrInseeException {
 		Field[] simplefield = ClassUtil.getAnnotatedDeclaredFields(o.getClass(), SolrField.class, false);
 		Field[] arrayfield = ClassUtil.getAnnotatedDeclaredFields(o.getClass(),  SolrFields.class, false);		
-		
-		Map<String, Object> fieldsValue = new HashMap<String, Object>();
 		
 		for(Field f : simplefield){
 			Object value = null;
@@ -63,7 +54,6 @@ public class SolrIndexer<U> implements SolrCreateService<U>{
 		}
 		
 		System.out.println(fieldsValue);
-		this.connector.index(fieldsValue);
 	}
 
 	
@@ -123,6 +113,12 @@ public class SolrIndexer<U> implements SolrCreateService<U>{
 		}
 		
 		return liste;
+	}
+
+
+	@Override
+	public Map<String, Object> getFields() {
+		return this.fieldsValue;
 	}
 
 }

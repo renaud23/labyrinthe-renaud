@@ -20,7 +20,7 @@ public class BeanPrimary {
 	@SolrField(fieldName="features", multivalued=true)
 	private List<String> features = new ArrayList<>();
 	@SolrFields(fields = {
-		@SolrField(fieldName="categorie", beanName="nested.categorie"),
+		@SolrField(fieldName="category", beanName="nested.categorie"),
 		@SolrField(fieldName="author", beanName="nested.author", fieldStrategy=JsonFieldStrategy.class)
 	})
 	private BeanNested nested;

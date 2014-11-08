@@ -10,7 +10,7 @@ public class MainTest {
 	public static void main(String[] args) {
 		BeanPrimary b = BeanBuilder.prepareBeanTest();
 		
-		BeanPrimaryIndexer indexer = new BeanPrimaryIndexer(new SolrJConnector());
+		BeanPrimaryIRepository indexer = new BeanPrimaryIRepository();
 		
 		try {
 			indexer.index(b);
